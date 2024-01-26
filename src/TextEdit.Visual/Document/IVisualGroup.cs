@@ -1,8 +1,9 @@
 ﻿using Avalonia;
+using TextEdit.Visual;
 
 namespace TextEdit.Visual
 {
-	public interface IVisualDocument : IList<IVisual>
+	public interface IVisualGroup : IList<IVisual>
 	{
 		#region Visual
 
@@ -169,35 +170,6 @@ namespace TextEdit.Visual
 		/// <param name="count">The number of visuals in the range.</param>
 		/// <returns>A read-only memory containing the specified visual range.</returns>
 		public ReadOnlyMemory<IVisual> AsMemory(int start, int count);
-
-		#endregion
-
-		#region Events
-
-		/// <summary>
-		/// Occured when visual was removed
-		/// </summary>
-		public event EventHandler<IVisualRemovedEventArgs>? VisualRemoved;
-
-		/// <summary>
-		/// Occured when visual was inserted
-		/// </summary>
-		public event EventHandler<IVisualInsertedEventArgs>? VisualInserted;
-
-		/// <summary>
-		/// Occured when some visual was replaced with another
-		/// </summary>
-		public event EventHandler<IVisualReplacedEventArgs>? VisualReplaced;
-
-		/// <summary>
-		/// Occured when range of visuals was removed
-		/// </summary>
-		public event EventHandler<IVisualRangeRemovedEventArgs>? VisualRangeRemoved;
-
-		/// <summary>
-		/// Occured when range of visuals was inserted
-		/// </summary>
-		public event EventHandler<IVisualRangeInsertedEventArgs>? VisualRangeInserted;
 
 		#endregion
 	}

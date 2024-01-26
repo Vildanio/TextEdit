@@ -121,14 +121,6 @@
 		#region Conversion
 
 		/// <summary>
-		/// Converts a range of lines into a string.
-		/// </summary>
-		/// <param name="start">The starting index of the range.</param>
-		/// <param name="count">The number of lines in the range.</param>
-		/// <returns>A string containing the specified line range.</returns>
-		public string AsString(int start, int count);
-
-		/// <summary>
 		/// Converts a range of lines into a read-only span.
 		/// </summary>
 		/// <param name="start">The starting index of the range.</param>
