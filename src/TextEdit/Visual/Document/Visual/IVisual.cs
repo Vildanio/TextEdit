@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using TextEdit.Text;
 
 namespace TextEdit.Visual
 {
@@ -90,6 +91,24 @@ namespace TextEdit.Visual
 		/// <param name="count"></param>
 		/// <returns></returns>
 		public IEnumerable<VisualColumnRange> GetSelectableColumns(int start, int count);
+
+		#endregion
+
+		#region GetTextHit
+
+		/// <summary>
+		/// Gets text hit corresponding to the given <paramref name="visualHit"/>
+		/// </summary>
+		/// <param name="visualHit"></param>
+		/// <returns></returns>
+		public TextHit GetTextHitFromVisualHit(VisualHit visualHit);
+
+		/// <summary>
+		/// Gets visual hit corresponding to the given <paramref name="textHit"/>
+		/// </summary>
+		/// <param name="textHit"></param>
+		/// <returns></returns>
+		public VisualHit GetVisualHitFromTextHit(TextHit textHit);
 
 		#endregion
 

@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Document\Visual\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
 

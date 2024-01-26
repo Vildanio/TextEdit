@@ -30,6 +30,10 @@ namespace TextEdit.Visual
 
         #region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VisualGroup"/> class
+		/// </summary>
+		/// <param name="buffer"></param>
         public VisualGroup(Buffer<IVisual> buffer)
         {
             this.buffer = buffer;
@@ -170,8 +174,7 @@ namespace TextEdit.Visual
 
 		public virtual int GetIndex(double height)
         {
-            if (height < 0)
-                throw new ArgumentOutOfRangeException(nameof(height));
+			ThrowHelper.ThrowIfNegative(height);
 
             int i = 0;
             double bottom = 0;
