@@ -21,28 +21,28 @@ namespace TextEdit.Visual
         public static VisualDocument List()
         {
             return new VisualDocument(
-                new VisualGroup(
+                VisualGroup.CreateUnsafe(
                     new ListBuffer<IVisual>()));
         }
 
         public static VisualDocument List(int count)
         {
             return new VisualDocument(
-                new VisualGroup(
+				VisualGroup.CreateUnsafe(
                     new ListBuffer<IVisual>(count)));
         }
 
         public static VisualDocument List(IEnumerable<IVisual> enumerable)
         {
             return new VisualDocument(
-                new VisualGroup(
+				VisualGroup.CreateUnsafe(
                     new ListBuffer<IVisual>(enumerable)));
         }
 
         internal static VisualDocument List(List<IVisual> list)
         {
             return new VisualDocument(
-                new VisualGroup(
+				VisualGroup.CreateUnsafe(
                     new ListBuffer<IVisual>(list)));
         }
 
@@ -54,7 +54,7 @@ namespace TextEdit.Visual
         /// Initializes a new instance of the <see cref="VisualDocument"/> class
         /// </summary>
         public VisualDocument()
-            : this(new VisualGroup(new ListBuffer<IVisual>()))
+            : this(VisualGroup.CreateUnsafe(new ListBuffer<IVisual>()))
         {
             
         }

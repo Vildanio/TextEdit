@@ -10,12 +10,26 @@ namespace TextEdit.Collections
     {
         private readonly StringBuilder builder;
 
-        #region Constructors
+		#region Static
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
+        /// Creates <see cref="StringBuilderBuffer"/> and sets the given <paramref name="builder"/> as internal buffer without copy.
         /// </summary>
-        public StringBuilderBuffer()
+        /// <param name="builder"></param>
+        /// <returns></returns>
+        public static StringBuilderBuffer CreateUnsafe(StringBuilder builder)
+        {
+            return new StringBuilderBuffer(builder);
+        }
+
+		#endregion
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
+		/// </summary>
+		public StringBuilderBuffer()
             : this(new StringBuilder())
         {
 

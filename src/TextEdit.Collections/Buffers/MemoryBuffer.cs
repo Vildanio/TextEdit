@@ -9,17 +9,41 @@ namespace TextEdit.Collections
 	public class MemoryBuffer<T> : ImmutableBuffer<T>
         where T : IEquatable<T>
     {
-        public static MemoryBuffer<T> Empty { get; } = new MemoryBuffer<T>(default);
+		#region Static
 
-        public ReadOnlyMemory<T> Memory { get; }
+		public static MemoryBuffer<T> Empty { get; } = new MemoryBuffer<T>(default, default);
+
+		/// <summary>
+		/// Creates <see cref="MemoryBuffer{T}"/> and uses the given <paramref name="memory"/> without copy.
+		/// </summary>
+		/// <param name="memory"></param>
+		/// <returns></returns>
+		public static MemoryBuffer<T> CreateUnsafe(ReadOnlyMemory<T> memory)
+        {
+            return new MemoryBuffer<T>(memory, default);
+        }
+
+		#endregion
+
+		public ReadOnlyMemory<T> Memory { get; }
 
 		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MemoryBuffer{T}"/> class.
+		/// </summary>
+		/// <param name="memory"></param>
+		public MemoryBuffer(ReadOnlyMemory<T> memory)
+            : this(memory.ToArray().AsMemory(), default)
+        {
+            
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryBuffer{T}"/> class
         /// </summary>
         /// <param name="memory"></param>
-		public MemoryBuffer(ReadOnlyMemory<T> memory)
+		private MemoryBuffer(ReadOnlyMemory<T> memory, bool stub)
         {
             this.Memory = memory;
         }

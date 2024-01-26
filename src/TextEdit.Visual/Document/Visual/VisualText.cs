@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Media.TextFormatting;
+﻿using Avalonia;
 using TextEdit.Text;
 
 namespace TextEdit.Visual.Document.Visual

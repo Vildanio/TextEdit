@@ -10,48 +10,71 @@ namespace TextEdit.Visual
 
         #region Static
 
-        /*public static VisualGroup GapBuffer<TEqutableVisualElement>()
-            where TEqutableVisualElement : IVisual, IEquatable<TEqutableVisualElement>
-        {
-            return new VisualGroup(new GapBuffer<TEqutableVisualElement>());
-        }*/
-
         public static VisualGroup ListBuffer()
         {
-            return new VisualGroup(new ListBuffer<IVisual>());
+            return CreateUnsafe(new ListBuffer<IVisual>());
         }
 
         public static VisualGroup ListBuffer(int capacity)
         {
-            return new VisualGroup(new ListBuffer<IVisual>(capacity));
+            return CreateUnsafe(new ListBuffer<IVisual>(capacity));
         }
 
-        #endregion
-
-        #region Constructors
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="VisualGroup"/> class
+		/// Creates <see cref="VisualGroup"/> and uses the given <paramref name="buffer"/> without copy.
 		/// </summary>
 		/// <param name="buffer"></param>
-        public VisualGroup(Buffer<IVisual> buffer)
+		/// <returns></returns>
+		public static VisualGroup CreateUnsafe(Buffer<IVisual> buffer)
+		{
+			return new VisualGroup(buffer);
+		}
+
+		#endregion
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VisualGroup"/> class and uses new <see cref="ListBuffer{T}"/> as internal buffer.
+		/// </summary>
+		public VisualGroup()
+			: this(new ListBuffer<IVisual>())
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VisualGroup"/> class.
+		/// </summary>
+		/// <param name="enumerable">Initial collection of elements.</param>
+		public VisualGroup(IEnumerable<IVisual> enumerable)
+			: this(new ListBuffer<IVisual>(enumerable))
+		{
+
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VisualGroup"/> class.
+		/// </summary>
+		/// <param name="buffer"></param>
+		private VisualGroup(Buffer<IVisual> buffer)
         {
             this.buffer = buffer;
         }
 
-		#endregion
+        #endregion
 
-		#region IVisualGroup
+        #region IVisualGroup
 
-		#region IReadOnlyVisualGroup
+        #region IReadOnlyVisualGroup
 
-		#region IReadOnlyBuffer
+        #region IReadOnlyBuffer
 
-		#region IReadOnlyList
+        #region IReadOnlyList
 
-		#region IEnumerable
+        #region IEnumerable
 
-		public IEnumerator<IVisual> GetEnumerator()
+        public IEnumerator<IVisual> GetEnumerator()
 		{
 			return buffer.GetEnumerator();
 		}

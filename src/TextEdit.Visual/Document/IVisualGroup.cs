@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using TextEdit.Visual;
 
 namespace TextEdit.Visual
 {
