@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextEdit.Visual", "src\Text
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "impl", "impl", "{59591DA4-20A4-4865-AB23-5984517421E0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextEdit.Collections", "src\TextEdit.Collections\TextEdit.Collections.csproj", "{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{24DB4467-5BC8-4BF8-BC36-13D0A592BA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24DB4467-5BC8-4BF8-BC36-13D0A592BA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24DB4467-5BC8-4BF8-BC36-13D0A592BA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{36AC404A-A35F-4172-A884-92BFE75C37DD} = {59591DA4-20A4-4865-AB23-5984517421E0}
 		{24DB4467-5BC8-4BF8-BC36-13D0A592BA49} = {59591DA4-20A4-4865-AB23-5984517421E0}
 		{59591DA4-20A4-4865-AB23-5984517421E0} = {A9399A85-F361-4F67-B1D2-093EE157FD65}
+		{9C46F09D-C6C1-4CAF-900B-FBC4AB3BB27F} = {59591DA4-20A4-4865-AB23-5984517421E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2BC16182-E6F0-48E6-9BCF-3D35794D1516}
