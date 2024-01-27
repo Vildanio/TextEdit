@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -8,7 +9,7 @@ namespace TextEdit.Collections
 	/// Implements <see cref="Buffer{T}"/> through <see cref="List{T}"/>
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ListBuffer<T> : Buffer<T>
+	public class ListBuffer<T> : Buffer<T>, IEquatable<ListBuffer<T>>
     {
         #region Fields
 
@@ -98,7 +99,7 @@ namespace TextEdit.Collections
 
         #region IReadOnlyBuffer
 
-        public override bool IsImmutable => true;
+        public override bool IsReadOnly => true;
 
 		#region IReadOnlyList
 
@@ -753,6 +754,35 @@ namespace TextEdit.Collections
             return list;
         }
 
-        #endregion
+		#endregion
+
+		#region Object
+
+		public bool Equals(ListBuffer<T>? other)
+		{
+			return other is not null && this.items == other.items;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is ListBuffer<T> stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(items);
+		}
+
+		public override string ToString()
+		{
+			if (this is ListBuffer<char>)
+			{
+				return items.AsSpan().ToString();
+			}
+
+			return GetType().ToString();
+		}
+
+		#endregion
 	}
 }

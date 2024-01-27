@@ -6,7 +6,7 @@ namespace TextEdit.Collections
 	/// <summary>
 	/// <see cref="Buffer{T}"/> implemented through <see cref="StringBuilder"/>
 	/// </summary>
-	public class StringBuilderBuffer : Buffer<char>
+	public class StringBuilderBuffer : Buffer<char>, IEquatable<StringBuilderBuffer>
     {
         private readonly StringBuilder builder;
 
@@ -91,7 +91,7 @@ namespace TextEdit.Collections
 
 		#endregion
 
-		public override bool IsImmutable => false;
+		public override bool IsReadOnly => false;
 
 		public override ReadOnlyMemory<char> AsMemory(int start, int count)
         {
@@ -209,6 +209,30 @@ namespace TextEdit.Collections
             return builder.ToString(start, count);
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Object
+
+		public bool Equals(StringBuilderBuffer? other)
+		{
+            return other is not null && other.builder == this.builder;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is StringBuilderBuffer stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(builder);
+		}
+
+		public override string ToString()
+		{
+			return builder.ToString();
+		}
+
+		#endregion
+	}
 }

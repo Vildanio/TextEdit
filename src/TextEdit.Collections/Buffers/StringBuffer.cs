@@ -3,7 +3,7 @@
 	/// <summary>
 	/// <see cref="IReadOnlyBuffer{T}"/> implementes through <see cref="string"/>
 	/// </summary>
-	public class StringBuffer : ImmutableBuffer<char>
+	public class StringBuffer : ImmutableBuffer<char>, IEquatable<StringBuffer>
     {
         public static StringBuffer Empty { get; } = new StringBuffer(string.Empty);
 
@@ -40,6 +40,11 @@
 		protected override char GetItem(int index) => String[index];
 
 		#endregion
+
+        public string AsString(int start, int count)
+        {
+            return String.Substring(start, count);
+        }
 
 		public override ReadOnlyMemory<char> AsMemory(int start, int count)
         {
@@ -123,6 +128,30 @@
             return String.AsSpan(0, startIndex).LastIndexOfAny(items);
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Object
+
+		public bool Equals(StringBuffer? other)
+		{
+			return other is not null && other.String == this.String;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is StringBuffer stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(String);
+		}
+
+		public override string ToString()
+		{
+            return String;
+		}
+
+		#endregion
+	}
 }

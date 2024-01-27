@@ -11,7 +11,7 @@ namespace TextEdit.Collections
 	/// deletions to the collection near the same relative index are optimized.
 	/// </summary>
 	/// <typeparam name="T">The type of elements in the buffer</typeparam>
-	public class GapBuffer<T> : Buffer<T>
+	public class GapBuffer<T> : Buffer<T>, IEquatable<GapBuffer<T>>
         where T : IEquatable<T>
     {
         #region Fields
@@ -83,6 +83,11 @@ namespace TextEdit.Collections
 		#endregion Constructors
 
         #region Helpers
+
+        public GapBuffer<T> Clone()
+        {
+            return new GapBuffer<T>(this.array.AsSpan());
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ThrowIfOutOfRange(int index)
@@ -369,7 +374,7 @@ namespace TextEdit.Collections
 
 		#endregion
 
-        public override bool IsImmutable => false;
+        public override bool IsReadOnly => false;
 
 		public override int IndexOf(ReadOnlySpan<T> value, int startIndex)
         {
@@ -730,18 +735,33 @@ namespace TextEdit.Collections
 
 		#endregion
 
-		#region ToString
+		#region Object
+
+		public bool Equals(GapBuffer<T>? other)
+		{
+			return other is not null && this.array == other.array;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is GapBuffer<T> stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(array);
+		}
 
 		public override string ToString()
-        {
-            if (this is GapBuffer<char> charBuffer)
-            {
-                return new string(charBuffer.array);
-            }
+		{
+			if (this is GapBuffer<char> charBuffer)
+			{
+				return new string(charBuffer.array);
+			}
 
-            return GetType().ToString();
-        }
+			return GetType().ToString();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

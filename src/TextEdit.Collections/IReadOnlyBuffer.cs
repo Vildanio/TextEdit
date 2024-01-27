@@ -11,7 +11,7 @@
         /// <summary>
         /// Gets value indicating whether collection is immutable or not.
         /// </summary>
-        public bool IsImmutable { get; }
+        public bool IsReadOnly { get; }
 
         #region Search
 

@@ -6,7 +6,7 @@ namespace TextEdit.Collections
 	/// <see cref="IReadOnlyBuffer{T}"/> implemented through <see cref="ReadOnlyMemory{T}"/>
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class MemoryBuffer<T> : ImmutableBuffer<T>
+	public class MemoryBuffer<T> : ImmutableBuffer<T>, IEquatable<MemoryBuffer<T>>
         where T : IEquatable<T>
     {
 		#region Static
@@ -152,6 +152,35 @@ namespace TextEdit.Collections
         {
             return Memory.Span.Slice(startIndex).LastIndexOfAny(items);
         }
+
+		#endregion
+
+		#region Object
+
+		public bool Equals(MemoryBuffer<T>? other)
+		{
+			return other is not null && this.Memory.Equals(other.Memory);
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is MemoryBuffer<T> stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(Memory);
+		}
+
+		public override string ToString()
+		{
+			if (this is MemoryBuffer<char>)
+			{
+				return Memory.ToString();
+			}
+
+			return GetType().ToString();
+		}
 
 		#endregion
 	}

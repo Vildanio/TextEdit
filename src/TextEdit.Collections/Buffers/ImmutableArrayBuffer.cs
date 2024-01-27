@@ -1,10 +1,10 @@
 ﻿namespace TextEdit.Collections
 {
-	public class ImmutableArrayBuffer<T> : ImmutableBuffer<T>
+	public class ImmutableArrayBuffer<T> : ImmutableBuffer<T>, IEquatable<ImmutableArrayBuffer<T>>
     {
         public static ImmutableArrayBuffer<T> Empty { get; } = new ImmutableArrayBuffer<T>(Array.Empty<T>());
 
-        private readonly T[] array;
+        private readonly T[] items;
 
 		#region Constructors
 
@@ -24,7 +24,7 @@
 		/// <param name="array"></param>
 		private ImmutableArrayBuffer(T[] array)
 		{
-			this.array = array;
+			this.items = array;
 		}
 
 		#endregion
@@ -37,25 +37,25 @@
 
 		public override IEnumerator<T> GetEnumerator()
 		{
-			return ((IEnumerable<T>)array).GetEnumerator();
+			return ((IEnumerable<T>)items).GetEnumerator();
 		}
 
 		#endregion
 
-		protected override T GetItem(int index) => array[index];
+		protected override T GetItem(int index) => items[index];
 
-		public override int Count => array.Length;
+		public override int Count => items.Length;
 
 		#endregion
 
 		public override ReadOnlyMemory<T> AsMemory(int start, int count)
         {
-            return array.AsMemory(start, count);
+            return items.AsMemory(start, count);
         }
 
 		public override ReadOnlySpan<T> AsSpan(int start, int count)
         {
-            return array.AsSpan(start, count);
+            return items.AsSpan(start, count);
         }
 
 		public override void CopyTo(int index, int count, Span<T> span)
@@ -65,17 +65,17 @@
 
 		public override void CopyTo(int sourceIndex, T[] destination, int destinationIndex, int count)
         {
-            Array.Copy(array, sourceIndex, destination, destinationIndex, count);
+            Array.Copy(items, sourceIndex, destination, destinationIndex, count);
         }
 
 		public override int IndexOf(T value, int startIndex)
         {
-            return Array.IndexOf(array, value, startIndex);
+            return Array.IndexOf(items, value, startIndex);
         }
 
 		public override int LastIndexOf(T value, int startIndex)
         {
-            return Array.LastIndexOf(array, value, startIndex);
+            return Array.LastIndexOf(items, value, startIndex);
         }
 
 		// TODO: Implement these methods
@@ -130,6 +130,35 @@
         {
             throw new NotImplementedException();
         }
+
+		#endregion
+
+		#region Object
+
+		public bool Equals(ImmutableArrayBuffer<T>? other)
+		{
+			return other is not null && this.items == other.items;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is ImmutableArrayBuffer<T> stringBuilderBuffer && this.Equals(stringBuilderBuffer);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(items);
+		}
+
+		public override string ToString()
+		{
+			if (this is ImmutableArrayBuffer<char>)
+			{
+				return items.AsSpan().ToString();
+			}
+
+			return GetType().ToString();
+		}
 
 		#endregion
 	}

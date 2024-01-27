@@ -10,4 +10,8 @@
     <ProjectReference Include="..\TextEdit.Line\TextEdit.Line.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rendering\" />
+  </ItemGroup>
+
 </Project>

@@ -273,7 +273,7 @@ namespace TextEdit.Visual
 
 		#region ICollection
 
-		public bool IsReadOnly => buffer.IsImmutable;
+		public bool IsReadOnly => buffer.IsReadOnly;
 
 		public void Add(IVisual item)
 		{

@@ -1,4 +1,4 @@
-﻿using TextEdit.Text.Document.Unicode;
+﻿using TextEdit.Text.Unicode;
 
 namespace TextEdit.Text
 {

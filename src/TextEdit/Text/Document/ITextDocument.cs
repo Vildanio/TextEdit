@@ -102,6 +102,12 @@
 		#region Copy
 
 		/// <summary>
+		/// Creates a new instance of the document with the same content
+		/// </summary>
+		/// <returns></returns>
+		public ITextDocument Clone();
+
+		/// <summary>
 		/// Copies a specified range of characters to a target span.
 		/// </summary>
 		/// <param name="index">The starting index of the range.</param>
