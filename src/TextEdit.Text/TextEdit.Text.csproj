@@ -10,9 +10,4 @@
     <ProjectReference Include="..\TextEdit.Line\TextEdit.Line.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TextEditor\Commands\Edit\" />
-    <Folder Include="TextEditor\Commands\Selection\" />
-  </ItemGroup>
-
 </Project>

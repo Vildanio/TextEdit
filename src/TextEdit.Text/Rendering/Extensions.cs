@@ -19,7 +19,7 @@ namespace TextEdit.Text.Rendering
 			{
 				var emptyRange = new TextHitRange(endPosition);
 
-				textSelection.SetSelectedRange(emptyRange);
+				textSelection.SelectedRange = emptyRange;
 			}
 		}
 

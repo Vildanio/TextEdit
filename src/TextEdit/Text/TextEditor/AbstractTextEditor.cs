@@ -50,5 +50,6 @@ namespace TextEdit.Text
 		public abstract IHotKeyManager HotKeyManager { get; }
 
 		public abstract IClipboard Clipboard { get; }
+		public abstract SelectionMode SelectionMode { get; set; }
 	}
 }

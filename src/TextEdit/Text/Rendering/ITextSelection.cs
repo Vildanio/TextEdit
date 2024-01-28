@@ -3,6 +3,8 @@ namespace TextEdit.Text
 {
 	public interface ITextSelection
 	{
+		#region Position
+
 		/// <summary>
 		/// Gets position where selection started
 		/// </summary>
@@ -14,10 +16,11 @@ namespace TextEdit.Text
 		public TextHit EndPosition { get; set; }
 
 		/// <summary>
-		/// Sets <see cref="StartPosition"/> and <see cref="ITextCaret.Position"/>
+		/// Gets and sets <see cref="StartPosition"/> and <see cref="EndPosition"/>
 		/// </summary>
-		/// <param name="range"></param>
-		public void SetSelectedRange(TextHitRange range);
+		public TextHitRange SelectedRange { get; set; }
+
+		#endregion
 
 		#region Editing
 

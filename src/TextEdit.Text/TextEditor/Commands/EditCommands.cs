@@ -61,5 +61,15 @@
 					}
 				}
 			}, canExecute: canExecute);
+
+		#region Edit mode
+
+		public static ITextEditorCommand SetInsertMode { get; }
+			= new ActionTextEditorCommand((editor) => editor.EditMode = EditMode.Insert);
+
+		public static ITextEditorCommand SetOverstrikeMode { get; }
+			= new ActionTextEditorCommand((editor) => editor.EditMode = EditMode.Overstrike);
+
+		#endregion
 	}
 }

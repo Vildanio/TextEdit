@@ -35,6 +35,16 @@
 
 		#endregion
 
+		#region Selection mode
+
+		public static ITextEditorCommand SetPlainSelectionMode { get; }
+			= new ActionTextEditorCommand((editor) => editor.SelectionMode = SelectionMode.Plain);
+
+		public static ITextEditorCommand SetColumnSelectionMode { get; }
+			= new ActionTextEditorCommand((editor) => editor.SelectionMode = SelectionMode.Column);
+
+		#endregion
+
 		#region Line navigation
 
 		public static ITextEditorCommand SelectToLogicalLineStart { get; }

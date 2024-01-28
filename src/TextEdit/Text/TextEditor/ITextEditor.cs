@@ -35,12 +35,17 @@ namespace TextEdit.Text
 
 		#endregion
 
-		#region Selections
+		#region Selection
 
 		/// <summary>
 		/// Gets selections.
 		/// </summary>
 		public ITextSelection? Selection { get; }
+
+		/// <summary>
+		/// Gets and sets selection mode
+		/// </summary>
+		public SelectionMode SelectionMode { get; set; }
 
 		#endregion
 
