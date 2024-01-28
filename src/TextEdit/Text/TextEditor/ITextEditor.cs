@@ -11,31 +11,11 @@ namespace TextEdit.Text
 	/// </summary>
 	public interface ITextEditor
 	{
-		#region TextDocument
-
 		public ITextDocument TextDocument { get; set; }
-
-		#endregion
-
-		#region LineMetrics
 
 		public ILineMetrics LineMetrics { get; }
 
-		#endregion
-
-		#region WordWrap
-
-		public bool WordWrap { get; set; }
-
-		#endregion
-
-		#region Caret
-
 		public IEnumerable<ITextCaret> Carets { get; }
-
-		#endregion
-
-		#region Selection
 
 		/// <summary>
 		/// Gets selections.
@@ -47,38 +27,26 @@ namespace TextEdit.Text
 		/// </summary>
 		public SelectionMode SelectionMode { get; set; }
 
-		#endregion
+		public EditMode EditMode { get; set; }
 
-		#region VirtualSpace
+		public IUndoManager UndoManager { get; }
+
+		public IHotKeyManager HotKeyManager { get; }
+
+		public IClipboard Clipboard { get; }
+
+		#region Options
+
+		public bool WordWrap { get; set; }
+
+		public bool TextDragDrop { get; set; }
+
+		public bool ScrollBelowDocument { get; set; }
 
 		/// <summary>
 		/// Gets and sets whether selection in column mode can select as if after line endings were whitespaces
 		/// </summary>
 		public bool VirtualSpace { get; set; }
-
-		#endregion
-
-		#region EditMode
-
-		public EditMode EditMode { get; set; }
-
-		#endregion
-
-		#region Undo
-
-		public IUndoManager UndoManager { get; }
-
-		#endregion
-
-		#region HotKey
-
-		public IHotKeyManager HotKeyManager { get; }
-
-		#endregion
-
-		#region Clipboard
-
-		public IClipboard Clipboard { get; }
 
 		#endregion
 	}

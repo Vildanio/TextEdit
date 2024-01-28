@@ -52,5 +52,7 @@ namespace TextEdit.Text
 		public abstract IClipboard Clipboard { get; }
 		public abstract SelectionMode SelectionMode { get; set; }
 		public abstract bool VirtualSpace { get; set; }
+		public abstract bool TextDragDrop { get; set; }
+		public abstract bool ScrollBelowDocument { get; set; }
 	}
 }
