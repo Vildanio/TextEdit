@@ -2,7 +2,7 @@
 {
 	internal sealed class InsertEditMode : AbstractEditMode
 	{
-		public override void Insert(TextEditor editor, char character)
+		public override void Insert(AbstractTextEditor editor, char character)
 		{
 			var textDocument = editor.TextDocument;
 

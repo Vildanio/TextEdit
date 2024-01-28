@@ -16,6 +16,6 @@
 			};
 		}
 
-		public abstract void Insert(TextEditor editor, char character);
+		public abstract void Insert(AbstractTextEditor editor, char character);
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace TextEdit.Visual
 {
-	public abstract class VisualRenderer : InputElement
+	public abstract class AbstractVisualRenderer : InputElement
 	{
 		/// <summary>
 		/// Gets currently rendered <see cref="IVisualDocument"/>.

@@ -4,7 +4,7 @@ using TextEdit.Text;
 namespace TextEdit.Visual
 {
 	/// <summary>
-	/// Represents an object that can be registered in <see cref="VisualRenderer"/>
+	/// Represents an object that can be registered in <see cref="AbstractVisualRenderer"/>
 	/// </summary>
 	public interface IVisual
 	{

@@ -1,10 +1,10 @@
 ﻿using Avalonia.Input;
 
-namespace TextEdit.Text
+namespace TextEdit.Line
 {
-	public abstract class TextRenderer : InputElement
+	public abstract class AbstractLineRenderer : InputElement
 	{
-		public abstract ITextDocument TextDocument { get; set; }
+		public abstract ILineDocument LineDocument { get; set; }
 
 		#region WordWrap
 
@@ -17,7 +17,7 @@ namespace TextEdit.Text
 		/// <summary>
 		/// Gets selections.
 		/// </summary>
-		public abstract IEnumerable<ITextSelection> Selections { get; set; }
+		public abstract IEnumerable<ILineSelection> Selections { get; set; }
 
 		#endregion
 	}

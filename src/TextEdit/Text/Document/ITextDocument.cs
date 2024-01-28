@@ -3,8 +3,12 @@
 	/// <summary>
 	/// Represents a collection of <see cref="char"/> that provides notifications of changing
 	/// </summary>
-	public interface ITextDocument : IList<char>
+	public interface ITextDocument : IList<char>, IReadOnlyList<char>
 	{
+		public new int Count { get; }
+
+		public new char this[int index] { get; set; }
+
 		#region Search
 
 		#region Contains

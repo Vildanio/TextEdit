@@ -8,6 +8,8 @@ namespace TextEdit.Text
 	/// </summary>
 	public readonly record struct TextHit
 	{
+		public static TextHit Default { get; } = new TextHit();
+
 		/// <summary>
 		/// Gets the index of the first character
 		/// </summary>

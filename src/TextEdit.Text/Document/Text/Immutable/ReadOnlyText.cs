@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TextEdit.Collections;
+﻿using TextEdit.Collections;
 
 namespace TextEdit.Text
 {
