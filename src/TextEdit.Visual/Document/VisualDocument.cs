@@ -92,7 +92,18 @@ namespace TextEdit.Visual
 
             set
             {
-                visualGroup[index] = value;
+                if (VisualReplaced is not null)
+                {
+                    IVisual old = visualGroup[index];
+
+					visualGroup[index] = value;
+
+                    VisualReplaced.Invoke(this, new VisualReplacedEventArgs(index, old, value));
+				}
+                else
+                {
+					visualGroup[index] = value;
+				}
             }
         }
 

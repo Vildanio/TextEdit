@@ -49,6 +49,15 @@ namespace TextEdit.Text
 
 		#endregion
 
+		#region VirtualSpace
+
+		/// <summary>
+		/// Gets and sets whether selection in column mode can select as if after line endings were whitespaces
+		/// </summary>
+		public bool VirtualSpace { get; set; }
+
+		#endregion
+
 		#region EditMode
 
 		public EditMode EditMode { get; set; }
