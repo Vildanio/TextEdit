@@ -5,10 +5,10 @@
 	/// </summary>
 	public interface IHotKeyManager
 	{
-		public void Add(HotKeyBinding hotKey);
+		public void Add(HotkeyBinding hotKey);
 
-		public void Remove(HotKeyBinding hotKey);
+		public void Remove(HotkeyBinding hotKey);
 
-		public bool Contains(HotKeyBinding hotKey);
+		public bool Contains(HotkeyBinding hotKey);
 	}
 }

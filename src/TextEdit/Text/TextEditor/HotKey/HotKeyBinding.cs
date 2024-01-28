@@ -1,12 +1,12 @@
 ﻿namespace TextEdit.Text
 {
-	public class HotKeyBinding
+	public class HotkeyBinding
 	{
-		public HotKeyGesture KeyGesture { get; }
+		public HotkeyGesture KeyGesture { get; }
 
 		public ITextEditorCommand Command { get; }
 
-		public HotKeyBinding(HotKeyGesture keyGesture, ITextEditorCommand command)
+		public HotkeyBinding(HotkeyGesture keyGesture, ITextEditorCommand command)
 		{
 			ThrowHelper.ThrowIfNull(keyGesture);
 			ThrowHelper.ThrowIfNull(command);

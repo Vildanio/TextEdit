@@ -5,13 +5,19 @@ namespace TextEdit.Text
 	/// <summary>
 	/// Represents a combination of <see cref="KeyGesture"/> for executing some command
 	/// </summary>
-	public class HotKeyGesture
+	public class HotkeyGesture
 	{
 		public KeyGesture FirstGesture { get; }
 
 		public KeyGesture? SecondGesture { get; }
 
-		public HotKeyGesture(KeyGesture firstGesture, KeyGesture? secondGesture = null)
+        public HotkeyGesture(Key key, KeyModifiers modifiers = KeyModifiers.None)
+			: this(new KeyGesture(key))
+        {
+            
+        }
+
+        public HotkeyGesture(KeyGesture firstGesture, KeyGesture? secondGesture = null)
 		{
 			ThrowHelper.ThrowIfNull(firstGesture);
 

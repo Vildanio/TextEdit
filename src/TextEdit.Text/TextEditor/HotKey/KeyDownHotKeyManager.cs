@@ -7,15 +7,31 @@ namespace TextEdit.Text
 		private const int tooMuchTime = 100;
 
 		private readonly AbstractTextEditor textEditor;
-		private readonly List<HotKeyBinding> hotKeys;
+		private readonly List<HotkeyBinding> hotKeys;
+
+		#region Constructors
 
 		public KeyDownHotKeyManager(AbstractTextEditor textEditor)
+			: this(textEditor, new List<HotkeyBinding>())
+		{
+			
+		}
+
+		public KeyDownHotKeyManager(AbstractTextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
+			: this(textEditor, new List<HotkeyBinding>(bindings))
+		{
+
+		}
+
+		private KeyDownHotKeyManager(AbstractTextEditor textEditor, List<HotkeyBinding> bindings)
 		{
 			this.textEditor = textEditor;
-			this.hotKeys = new List<HotKeyBinding>();
+			this.hotKeys = bindings;
 
 			textEditor.KeyDown += TextEditor_KeyDown;
 		}
+
+		#endregion
 
 		private DateTime lastKeyPressTime;
 		private KeyGesture? lastKeyGesture;
@@ -62,17 +78,17 @@ namespace TextEdit.Text
 
 		#region IHotKeyManager
 
-		public void Remove(HotKeyBinding binding)
+		public void Remove(HotkeyBinding binding)
 		{
 			hotKeys.Remove(binding);
 		}
 
-		public void Add(HotKeyBinding binding)
+		public void Add(HotkeyBinding binding)
 		{
 			hotKeys.Add(binding);
 		}
 
-		public bool Contains(HotKeyBinding binding)
+		public bool Contains(HotkeyBinding binding)
 		{
 			return hotKeys.Contains(binding);
 		}
