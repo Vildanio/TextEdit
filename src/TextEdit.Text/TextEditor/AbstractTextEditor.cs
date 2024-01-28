@@ -65,15 +65,17 @@ namespace TextEdit.Text
 				new HotkeyBinding(new HotkeyGesture(Key.Y, KeyModifiers.Control), UndoCommands.Redo),
 			}.ToImmutableArray();
 
-		private IUndoManager undoManager;
 		private readonly IHotKeyManager hotKeyManager;
 		private readonly AbstractTextRenderer textRenderer;
+		private readonly TextDocumentChangeManager undoManager;
 
 		protected AbstractTextEditor(AbstractTextRenderer textRenderer)
 		{
 			this.textRenderer = textRenderer;
 			this.hotKeyManager = new InputHotKeyManager(this, BasicHotkeyBindings);
 			this.undoManager = new TextDocumentChangeManager(textRenderer.TextDocument);
+
+			VisualChildren.Add(textRenderer);
 		}
 
 		public ITextDocument TextDocument
@@ -88,8 +90,7 @@ namespace TextEdit.Text
 				if (TextDocument != value)
 				{
 					textRenderer.TextDocument = value;
-
-					undoManager = new TextDocumentChangeManager(value);
+					undoManager.Document = value;
 				}
 			}
 		}

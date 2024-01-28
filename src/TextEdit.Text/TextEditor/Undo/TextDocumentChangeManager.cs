@@ -7,7 +7,25 @@ namespace TextEdit.Text
 	/// </summary>
 	public class TextDocumentChangeManager : IUndoManager
 	{
-		private readonly ITextDocument document;
+		private ITextDocument document;
+
+		public ITextDocument Document
+		{
+			get
+			{
+				return document;
+			}
+			set
+			{
+				if (document != value)
+				{
+					document = value;
+
+					undoActions.Clear();
+					redoActions.Clear();
+				}
+			}
+		}
 
 		#region Constructors
 
