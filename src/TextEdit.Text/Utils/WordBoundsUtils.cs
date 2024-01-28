@@ -4,6 +4,8 @@ namespace TextEdit.Text.Utils
 {
 	internal static class WordBoundsUtils
 	{
+		// TODO: Implement the Unicode alghorithm https://unicode.org/reports/tr29/#Word_Boundaries
+
 		public static int GetWordLeft(IReadOnlyList<char> text, int position)
 		{
 			ThrowHelper.ThrowIfNull(text);

@@ -46,6 +46,7 @@ namespace TextEdit.Text
 				//new HotKeyBinding(new HotKeyGesture(Key.End, KeyModifiers.Shift), SelectionCommands.SelectToVisualLineEnd),
 				new HotkeyBinding(new HotkeyGesture(Key.Home, KeyModifiers.Shift | KeyModifiers.Control), SelectionCommands.SelectToDocumentStart),
 				new HotkeyBinding(new HotkeyGesture(Key.End, KeyModifiers.Shift | KeyModifiers.Control), SelectionCommands.SelectToDocumentEnd),
+				new HotkeyBinding(new HotkeyGesture(Key.V, KeyModifiers.Shift), SelectionCommands.SetColumnSelectionMode, SelectionCommands.SetPlainSelectionMode),
 
 				// Clipboard
 				new HotkeyBinding(new HotkeyGesture(Key.C, KeyModifiers.Control), ClipboardCommands.Copy),
@@ -71,7 +72,7 @@ namespace TextEdit.Text
 		protected AbstractTextEditor(AbstractTextRenderer textRenderer)
 		{
 			this.textRenderer = textRenderer;
-			this.hotKeyManager = new KeyDownHotKeyManager(this, BasicHotkeyBindings);
+			this.hotKeyManager = new InputHotKeyManager(this, BasicHotkeyBindings);
 			this.undoManager = new TextDocumentChangeManager(textRenderer.TextDocument);
 		}
 

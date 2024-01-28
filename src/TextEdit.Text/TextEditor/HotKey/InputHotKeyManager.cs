@@ -2,7 +2,7 @@
 
 namespace TextEdit.Text
 {
-	internal sealed class KeyDownHotKeyManager : IHotKeyManager
+	internal sealed class InputHotKeyManager : IHotKeyManager
 	{
 		private const int tooMuchTime = 100;
 
@@ -11,30 +11,42 @@ namespace TextEdit.Text
 
 		#region Constructors
 
-		public KeyDownHotKeyManager(AbstractTextEditor textEditor)
+		public InputHotKeyManager(AbstractTextEditor textEditor)
 			: this(textEditor, new List<HotkeyBinding>())
 		{
 			
 		}
 
-		public KeyDownHotKeyManager(AbstractTextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
+		public InputHotKeyManager(AbstractTextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
 			: this(textEditor, new List<HotkeyBinding>(bindings))
 		{
 
 		}
 
-		private KeyDownHotKeyManager(AbstractTextEditor textEditor, List<HotkeyBinding> bindings)
+		private InputHotKeyManager(AbstractTextEditor textEditor, List<HotkeyBinding> bindings)
 		{
 			this.textEditor = textEditor;
 			this.hotKeys = bindings;
 
 			textEditor.KeyDown += TextEditor_KeyDown;
+			textEditor.KeyUp += TextEditor_KeyUp;
 		}
 
 		#endregion
 
 		private DateTime lastKeyPressTime;
 		private KeyGesture? lastKeyGesture;
+
+		// Gets hotkey which was activated and now waits for key releasing
+		private HotkeyBinding? activeHotKey;
+
+		private void TextEditor_KeyUp(object? sender, KeyEventArgs e)
+		{
+			if (activeHotKey is not null)
+			{
+				activeHotKey.OnReleaseCommand?.Execute(textEditor);
+			}
+		}
 
 		private void TextEditor_KeyDown(object? sender, KeyEventArgs e)
 		{
@@ -60,9 +72,14 @@ namespace TextEdit.Text
 				if (hotKeyGesture.FirstGesture == firstKeyGesture && 
 					hotKeyGesture.SecondGesture == secondKeyGesture)
 				{
-					if (hotKey.Command.CanExecute(textEditor))
+					if (hotKey.OnPressCommand.CanExecute(textEditor))
 					{
-						hotKey.Command.Execute(textEditor);
+						hotKey.OnPressCommand.Execute(textEditor);
+
+						if(hotKey.OnReleaseCommand is not null)
+						{
+							activeHotKey = hotKey;
+						}
 					}
 
 					// Stop processing even if the command didn't execute.
