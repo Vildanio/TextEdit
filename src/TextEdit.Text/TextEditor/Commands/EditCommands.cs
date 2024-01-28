@@ -10,6 +10,8 @@
 			return !editor.TextDocument.IsReadOnly && editor.Carets.Any();
 		};
 
+		#region Remove
+
 		public static ITextEditorCommand Backspace { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
@@ -61,6 +63,8 @@
 					}
 				}
 			}, canExecute: canExecute);
+
+		#endregion
 
 		#region Edit mode
 
