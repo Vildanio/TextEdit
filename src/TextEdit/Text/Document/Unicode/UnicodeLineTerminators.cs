@@ -1,4 +1,4 @@
-﻿namespace TextEdit.Text.Unicode
+﻿namespace TextEdit.Text
 {
 	internal static class UnicodeLineTerminators
 	{

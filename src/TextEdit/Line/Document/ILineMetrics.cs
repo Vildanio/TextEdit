@@ -1,4 +1,4 @@
-﻿namespace TextEdit.Line.Document
+﻿namespace TextEdit.Line
 {
 	/// <summary>
 	/// Provides information about text splitted into lines

@@ -1,30 +1,42 @@
-﻿
-namespace TextEdit.Text
+﻿namespace TextEdit.Text
 {
-	public interface ITextSelection
+	/// <summary>
+	/// Manages text selecting
+	/// </summary>
+	public interface ITextSelectionManager
 	{
-		#region Position
+		#region SelectedRanges
 
 		/// <summary>
-		/// Gets position where selection started
+		/// Gets collection of <see cref="TextHitRange"/> elements where each of them represents selection
+		/// and the <see cref="TextHitRange.End"/> represents caret position. The primary selection is the first in the collection if collection is not empty.
 		/// </summary>
-		public TextHit StartPosition { get; set; }
+		/// <remarks>
+		/// Note that the <see cref="TextHitRange"/> values can be invalid within <see cref="ITextDocument"/> if virtual space is enabled.
+		/// </remarks>
+		public IReadOnlyList<TextHitRange> Selections { get; }
 
 		/// <summary>
-		/// Gets position where selection ended
+		/// Adds <paramref name="range"/> to the <see cref="Selections"/> and returns index in it.
 		/// </summary>
-		public TextHit EndPosition { get; set; }
+		/// <param name="range"></param>
+		/// <returns>Index of the <paramref name="range"/> in <see cref="Selections"/></returns>
+		public int Add(TextHitRange range);
 
 		/// <summary>
-		/// Gets and sets <see cref="StartPosition"/> and <see cref="EndPosition"/>
+		/// Removes selection at the <paramref name="index"/> in <see cref="Selections"/>
 		/// </summary>
-		public TextHitRange SelectedRange { get; set; }
+		/// <param name="index"></param>
+		public void RemoveAt(int index);
+
+		/// <summary>
+		/// Removes all selections
+		/// </summary>
+		public void Clear();
 
 		#endregion
 
 		#region Editing
-
-		// These methods defined excplicitly to support column selection
 
 		/// <summary>
 		/// Replaces text in selected range with the given <paramref name="text"/>
@@ -33,43 +45,42 @@ namespace TextEdit.Text
 		public void Paste(string text);
 
 		/// <summary>
-		/// Copies text in the selected range
+		/// Copies text in the selected range.
 		/// </summary>
 		/// <returns></returns>
 		public string Copy();
 
 		/// <summary>
-		/// Copies and then removed from document text in the selected range
+		/// Copies and then removes text in the selected range.
 		/// </summary>
 		/// <returns></returns>
 		public string Cut();
 
 		#endregion
 
-		#region Navigation
+		// These methods needed to prevent carets and selections from moving independently of others
 
-		// These all methods explicitly defined even if they can be implemented
-		// through the SetPosition method to support multiple selection navigation.
+		#region Navigation			
 
 		#region Char
 
 		/// <summary>
-		/// Empties selection and moves selection end to the previous character
+		/// Empties selection and moves carets to the previous character
 		/// </summary>
 		public void CharLeft();
 
 		/// <summary>
-		/// Empties selection and moves selection end to the next character
+		/// Empties selection and moves carets to the next character
 		/// </summary>
 		public void CharRight();
 
 		/// <summary>
-		/// Empties selection and moves selection end caret to the previous word boundary
+		/// Empties selection and moves carets to the previous word boundary
 		/// </summary>
 		public void WordLeft();
 
 		/// <summary>
-		/// Empties selection and moves selection end caret to the next word boundary
+		/// Empties selection and moves carets to the next word boundary
 		/// </summary>
 		public void WordRight();
 
@@ -78,12 +89,12 @@ namespace TextEdit.Text
 		#region Document
 
 		/// <summary>
-		/// Empties selection and moves selection end to the document start
+		/// Empties selection and moves carets to the document start
 		/// </summary>
 		public void DocumentStart();
 
 		/// <summary>
-		/// Empties selection and moves selection end to the document end
+		/// Empties selection and moves carets to the document end
 		/// </summary>
 		public void DocumentEnd();
 
@@ -92,22 +103,22 @@ namespace TextEdit.Text
 		#region Logical line
 
 		/// <summary>
-		/// Empties selection and moves selection end to previous logical line.
+		/// Empties selection and moves carets to previous logical line.
 		/// </summary>
 		public void LogicalLineUp();
 
 		/// <summary>
-		/// Empties selection and moves selection end to next logical line.
+		/// Empties selection and moves carets to next logical line.
 		/// </summary>
 		public void LogicalLineDown();
 
 		/// <summary>
-		/// Empties selection and moves selection end to start of logical line.
+		/// Empties selection and moves carets to start of logical line.
 		/// </summary>
 		public void LogicalLineStart();
 
 		/// <summary>
-		/// Empties selection and moves selection end to end of logical line.
+		/// Empties selection and moves carets to end of logical line.
 		/// </summary>
 		public void LogicalLineEnd();
 
@@ -116,22 +127,22 @@ namespace TextEdit.Text
 		#region Visual line
 
 		/// <summary>
-		/// Empties selection and moves selection end to previous visual line.
+		/// Empties selection and moves carets to previous visual line.
 		/// </summary>
 		public void VisualLineUp();
 
 		/// <summary>
-		/// Empties selection and moves selection end to previous visual line.
+		/// Empties selection and moves carets to previous visual line.
 		/// </summary>
 		public void VisualLineDown();
 
 		/// <summary>
-		/// Empties selection and moves selection end to start of visual line.
+		/// Empties selection and moves carets to start of visual line.
 		/// </summary>
 		public void VisualLineStart();
 
 		/// <summary>
-		/// Empties selection and moves selection end to end of visual line.
+		/// Empties selection and moves carets to end of visual line.
 		/// </summary>
 		public void VisualLineEnd();
 

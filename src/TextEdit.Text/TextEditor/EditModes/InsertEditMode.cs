@@ -6,11 +6,9 @@
 		{
 			var textDocument = editor.TextDocument;
 
-			foreach (var caret in editor.Carets)
+			foreach (var caretPosition in editor.SelectionManager.EnumerateCarets())
 			{
-				int offset = caret.Position.GetLastCharacterIndex();
-
-				textDocument.Insert(offset, character);
+				textDocument.Insert(caretPosition.CharacterIndex, character);
 			}
 		}
 	}

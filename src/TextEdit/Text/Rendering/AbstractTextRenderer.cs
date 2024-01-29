@@ -1,5 +1,5 @@
 ﻿using Avalonia.Input;
-using TextEdit.Line.Document;
+using TextEdit.Line;
 
 namespace TextEdit.Text
 {
@@ -18,21 +18,12 @@ namespace TextEdit.Text
 
 		#endregion
 
-		#region Carets
-
-		/// <summary>
-		/// Gets carets.
-		/// </summary>
-		public abstract IEnumerable<ITextCaret> Carets { get; }
-
-		#endregion
-
 		#region Selections
 
 		/// <summary>
-		/// Gets selection.
+		/// Gets selection manager.
 		/// </summary>
-		public abstract ITextSelection? Selection { get; }
+		public abstract ITextSelectionManager SelectionManager { get; }
 
 		#endregion
 	}

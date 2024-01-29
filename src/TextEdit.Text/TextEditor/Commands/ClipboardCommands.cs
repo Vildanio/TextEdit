@@ -10,28 +10,28 @@ namespace TextEdit.Text
 		public static ITextEditorCommand Cut { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				var selection = editor.Selection;
+				var selection = editor.SelectionManager;
 
-				if (selection is not null)
+				if (selection.Selections.Any())
 				{
 					string text = selection.Cut();
 
 					editor.Clipboard.SetTextAsync(text);
 				}
-			}, canExecute: (editor) => !editor.Selection.IsNullOrEmpty() && !editor.TextDocument.IsReadOnly);
+			}, canExecute: (editor) => !editor.SelectionManager.IsEmpty() && !editor.TextDocument.IsReadOnly);
 
 		public static ITextEditorCommand Copy { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				var selection = editor.Selection;
+				var selection = editor.SelectionManager;
 
-				if (selection is not null)
+				if (selection.Selections.Any())
 				{
 					string text = selection.Copy();
 
 					editor.Clipboard.SetTextAsync(text);
 				}
-			}, canExecute: (editor) => !editor.Selection.IsNullOrEmpty());
+			}, canExecute: (editor) => !editor.SelectionManager.IsEmpty());
 
 		public static ITextEditorCommand Paste { get; }
 			= new ActionTextEditorCommand((editor) =>
@@ -40,20 +40,8 @@ namespace TextEdit.Text
 
 				if (text is not null)
 				{
-					var selection = editor.Selection;
-
-					if (selection is not null)
-					{
-						selection.Paste(text);
-					}
-					else
-					{
-						foreach (var caret in editor.Carets)
-						{
-							caret.Paste(text);
-						}
-					}
+					editor.SelectionManager.Paste(text);
 				}
-			}, canExecute: (editor) => !editor.TextDocument.IsReadOnly && !editor.Selection.IsNullOrEmpty() || editor.Carets.Any());
+			}, canExecute: (editor) => !editor.TextDocument.IsReadOnly && !editor.SelectionManager.IsEmpty() || editor.SelectionManager.Selections.Any());
 	}
 }

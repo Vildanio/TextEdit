@@ -9,120 +9,133 @@ namespace TextEdit.Text
 	{
 		private static readonly Func<ITextEditor, bool> canExecute = (editor) =>
 		{
-			return !editor.TextDocument.IsReadOnly && editor.Carets.Any();
+			return !editor.TextDocument.IsReadOnly && editor.SelectionManager.Selections.Any();
 		};
 
 		#region Char
 
-		public static ITextEditorCommand CharBackspace { get; }
-			= new ActionTextEditorCommand((editor) =>
-			{
-				var selection = editor.Selection;
-
-				if (selection is not null)
-				{
-					selection.Paste(string.Empty);
-				}
-				else
-				{
-					var textDocument = editor.TextDocument;
-
-					foreach (var caret in editor.Carets)
-					{
-						var caretPosition = caret.Position;
-
-						if (caretPosition.CharacterIndex > 0)
-						{
-							textDocument.RemoveAt(caretPosition.CharacterIndex);
-
-							caret.CharLeft();
-						}
-					}
-				}
-			}, canExecute: canExecute);
-
 		public static ITextEditorCommand CharDelete { get; }
-			= new ActionTextEditorCommand((editor) =>
-			{
-				var selection = editor.Selection;
+			= new ActionTextEditorCommand(DoCharDelete, canExecute: canExecute);
 
-				if (selection is not null)
-				{
-					selection.Paste(string.Empty);
-				}
-				else
-				{
-					var textDocument = editor.TextDocument;
-
-					foreach (var caret in editor.Carets)
-					{
-						var caretPosition = caret.Position;
-
-						if (caretPosition.CharacterIndex > 0)
-						{
-							textDocument.RemoveAt(caretPosition.CharacterIndex);
-						}
-					}
-				}
-			}, canExecute: canExecute);
-
-		public static ITextEditorCommand WordBackspace { get; }
-			= new ActionTextEditorCommand((editor) =>
-			{
-				var selection = editor.Selection;
-
-				if (selection is not null)
-				{
-					selection.Paste(string.Empty);
-				}
-				else
-				{
-					var textDocument = editor.TextDocument;
-
-					foreach (var caret in editor.Carets)
-					{
-						var caretIndex = caret.Position.CharacterIndex;
-
-						if (caretIndex > 0)
-						{
-							int newCaretPosition = WordBoundsUtils.GetWordLeft(textDocument, caretIndex);
-
-							textDocument.RemoveRange(newCaretPosition, caretIndex - newCaretPosition);
-
-							caret.Position = new TextHit(newCaretPosition);
-						}
-					}
-				}
-			}, canExecute: canExecute);
+		public static ITextEditorCommand CharBackspace { get; }
+			= new ActionTextEditorCommand(DoCharBackspace, canExecute: canExecute);
 
 		public static ITextEditorCommand WordDelete { get; }
-			= new ActionTextEditorCommand((editor) =>
+			= new ActionTextEditorCommand(DoWordDelete, canExecute: canExecute);
+
+		public static ITextEditorCommand WordBackspace { get; }
+			= new ActionTextEditorCommand(DoWordBackspace, canExecute: canExecute);
+
+		public static void DoCharDelete(ITextEditor textEditor)
+		{
+			var selection = textEditor.SelectionManager;
+
+			if (selection.Selections.Any())
 			{
-				var selection = editor.Selection;
+				selection.Paste(string.Empty);
+			}
+			else
+			{
+				var textDocument = textEditor.TextDocument;
 
-				if (selection is not null)
+				foreach (var caret in selection.EnumerateCarets())
 				{
-					selection.Paste(string.Empty);
-				}
-				else
-				{
-					var textDocument = editor.TextDocument;
+					var caretPosition = caret;
 
-					foreach (var caret in editor.Carets)
+					if (caretPosition.CharacterIndex > 0)
 					{
-						var caretIndex = caret.Position.CharacterIndex;
-
-						if (caretIndex > 0)
-						{
-							int newCaretPosition = WordBoundsUtils.GetWordRight(textDocument, caretIndex);
-
-							textDocument.RemoveRange(newCaretPosition, newCaretPosition - caretIndex);
-
-							caret.Position = new TextHit(newCaretPosition);
-						}
+						textDocument.RemoveAt(caretPosition.CharacterIndex);
 					}
 				}
-			}, canExecute: canExecute);
+			}
+		}
+
+		public static void DoWordDelete(ITextEditor textEditor)
+		{
+			var selection = textEditor.SelectionManager;
+
+			if (selection.Selections.Any())
+			{
+				selection.Paste(string.Empty);
+			}
+			else
+			{
+				var textDocument = textEditor.TextDocument;
+
+				foreach (var caret in selection.EnumerateCarets())
+				{
+					var caretIndex = caret.CharacterIndex;
+
+					if (caretIndex > 0)
+					{
+						int newCaretPosition = WordBoundsUtils.GetWordRight(textDocument, caretIndex);
+
+						textDocument.RemoveRange(newCaretPosition, newCaretPosition - caretIndex);
+					}
+				}
+				
+				// ### NEEDS_CHECK
+				// Maybe moving should be performed before removing
+				selection.WordLeft();
+			}
+		}
+
+		public static void DoCharBackspace(ITextEditor textEditor)
+		{
+			var selection = textEditor.SelectionManager;
+
+			if (selection.Selections.Any())
+			{
+				selection.Paste(string.Empty);
+			}
+			else
+			{
+				var textDocument = textEditor.TextDocument;
+
+				foreach (var caret in selection.EnumerateCarets())
+				{
+					var caretPosition = caret;
+
+					if (caretPosition.CharacterIndex > 0)
+					{
+						textDocument.RemoveAt(caretPosition.CharacterIndex);
+					}
+				}
+
+				// ### NEEDS_CHECK
+				// Maybe moving should be performed before removing
+				selection.CharLeft();
+			}
+		}
+
+		public static void DoWordBackspace(ITextEditor textEditor)
+		{
+			var selection = textEditor.SelectionManager;
+
+			if (selection.Selections.Any())
+			{
+				selection.Paste(string.Empty);
+			}
+			else
+			{
+				var textDocument = textEditor.TextDocument;
+
+				foreach (var caret in selection.EnumerateCarets())
+				{
+					var caretIndex = caret.CharacterIndex;
+
+					if (caretIndex > 0)
+					{
+						int newCaretPosition = WordBoundsUtils.GetWordLeft(textDocument, caretIndex);
+
+						textDocument.RemoveRange(newCaretPosition, caretIndex - newCaretPosition);
+					}
+				}
+
+				// ### NEEDS_CHECK
+				// Maybe moving should be performed before removing
+			}
+		}
 
 		#endregion
 

@@ -1,16 +1,15 @@
-﻿using TextEdit.Text.Unicode;
-
-namespace TextEdit.Text
+﻿namespace TextEdit.Text
 {
 	internal sealed class OverstrikeEditMode : AbstractEditMode
 	{
 		public override void Insert(AbstractTextEditor editor, char character)
 		{
 			var textDocument = editor.TextDocument;
+			var selection = editor.SelectionManager;
 
-			foreach (var caret in editor.Carets)
+			foreach (var caretPosition in selection.EnumerateCarets())
 			{
-				int offset = caret.Position.GetLastCharacterIndex();
+				int offset = caretPosition.CharacterIndex;
 
 				// When caret before line ending or at the end of text
 				if (offset == textDocument.Count || IsBeforeLineEnding(textDocument, offset))
@@ -21,11 +20,11 @@ namespace TextEdit.Text
 				{
 					// Replace current character
 					textDocument[offset] = character;
-
-					// Move caret to the next character
-					caret.CharRight();
 				}
 			}
+
+			// ### NEEDS_CHECK
+			selection.CharRight();
 		}
 
 		private static bool IsBeforeLineEnding(ITextDocument textDocument, int offset)

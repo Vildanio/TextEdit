@@ -1,6 +1,6 @@
 ﻿using Avalonia.Input;
 
-namespace TextEdit.Text.TextEditor.Clipboard
+namespace TextEdit.Text
 {
 	internal sealed class FalseClipboard : IClipboard
 	{

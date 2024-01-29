@@ -1,4 +1,4 @@
-﻿using TextEdit.Line.Document;
+﻿using TextEdit.Line;
 
 namespace TextEdit.Text
 {
@@ -15,25 +15,17 @@ namespace TextEdit.Text
 
 		public ILineMetrics LineMetrics { get; }
 
-		public IEnumerable<ITextCaret> Carets { get; }
-
-		/// <summary>
-		/// Gets selections.
-		/// </summary>
-		public ITextSelection? Selection { get; }
-
-		/// <summary>
-		/// Gets and sets selection mode
-		/// </summary>
-		public SelectionMode SelectionMode { get; set; }
+		public ITextSelectionManager SelectionManager { get; }
 
 		public EditMode EditMode { get; set; }
+
+		public SelectionMode SelectionMode { get; set; }
+
+		public IClipboard Clipboard { get; }
 
 		public IUndoManager UndoManager { get; }
 
 		public IHotKeyManager HotKeyManager { get; }
-
-		public IClipboard Clipboard { get; }
 
 		#region Options
 
@@ -41,12 +33,9 @@ namespace TextEdit.Text
 
 		public bool TextDragDrop { get; set; }
 
-		public bool ScrollBelowDocument { get; set; }
-
-		/// <summary>
-		/// Gets and sets whether selection in column mode can select as if after line endings were whitespaces
-		/// </summary>
 		public bool VirtualSpace { get; set; }
+
+		public bool ScrollBelowDocument { get; set; }
 
 		#endregion
 	}

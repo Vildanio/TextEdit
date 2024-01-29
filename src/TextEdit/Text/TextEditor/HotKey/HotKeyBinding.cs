@@ -1,6 +1,4 @@
-﻿using Avalonia.Input;
-
-namespace TextEdit.Text
+﻿namespace TextEdit.Text
 {
 	public class HotkeyBinding
 	{

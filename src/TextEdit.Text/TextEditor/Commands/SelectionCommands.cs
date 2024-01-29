@@ -5,33 +5,33 @@
 	/// </summary>
 	public static class SelectionCommands
 	{
-		private static readonly Func<ITextEditor, bool> canExecute = (editor) => editor.Selection is not null;
+		private static readonly Func<ITextEditor, bool> canExecute = (editor) => editor.SelectionManager.Selections.Any();
 
 		#region Basic navigation
 
 		public static ITextEditorCommand SelectLogicalLineUp { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.LogicalLineUp(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectLogicalLineUp(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectLogicalLineDown { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.LogicalLineDown(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectLogicalLineDown(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectVisualLineUp { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.VisualLineUp(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectVisualLineUp(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectVisualLineDown { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.VisualLineUp(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectVisualLineUp(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectCharLeft { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.CharLeft(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectCharLeft(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectCharRight { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.CharRight(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectCharRight(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectWordLeft { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.WordLeft(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectWordLeft(); }, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectWordRight { get; }
-			= new ActionTextEditorCommand((editor) => { editor.Selection?.WordRight(); }, canExecute: canExecute);
+			= new ActionTextEditorCommand((editor) => { editor.SelectionManager.SelectWordRight(); }, canExecute: canExecute);
 
 		#endregion
 
@@ -50,45 +50,42 @@
 		public static ITextEditorCommand SelectToLogicalLineStart { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectLogicalLineStart();
+				editor.SelectionManager.SelectLogicalLineStart();
 			}, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectToLogicalLineEnd { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectLogicalLineEnd();
+				editor.SelectionManager.SelectLogicalLineEnd();
 			}, canExecute: canExecute);
 
 
 		public static ITextEditorCommand SelectToVisualLineStart { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectVisualLineStart();
+				editor.SelectionManager.SelectVisualLineStart();
 			}, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectToVisualLineEnd { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectVisualLineEnd();
+				editor.SelectionManager.SelectVisualLineEnd();
 			}, canExecute: canExecute);
 
 		#endregion
 
 		#region Document navigation
 
-		// There are noy ITextSelection.SelectToStart or SelectToEnd
-		// because behaviour should be always the same despite the column selection mode or count of selections.
-
 		public static ITextEditorCommand SelectToDocumentStart { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectDocumentStart();
+				editor.SelectionManager.SelectDocumentStart();
 			}, canExecute: canExecute);
 
 		public static ITextEditorCommand SelectToDocumentEnd { get; }
 			= new ActionTextEditorCommand((editor) =>
 			{
-				editor.Selection?.SelectDocumentEnd();
+				editor.SelectionManager.SelectDocumentEnd();
 			});
 
 		#endregion

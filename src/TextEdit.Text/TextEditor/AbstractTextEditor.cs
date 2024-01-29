@@ -2,8 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using TextEdit.Line.Document;
-using TextEdit.Text.TextEditor.Clipboard;
+using TextEdit.Line;
 
 namespace TextEdit.Text
 {
@@ -74,9 +73,11 @@ namespace TextEdit.Text
 			this.textRenderer = textRenderer;
 			this.hotKeyManager = new InputHotKeyManager(this, BasicHotkeyBindings);
 			this.undoManager = new TextDocumentChangeManager(textRenderer.TextDocument);
-
+			
 			VisualChildren.Add(textRenderer);
 		}
+
+		#region ITextEditor
 
 		public ITextDocument TextDocument
 		{
@@ -97,9 +98,7 @@ namespace TextEdit.Text
 
 		public ILineMetrics LineMetrics => textRenderer.LineMetrics;
 
-		public IEnumerable<ITextCaret> Carets => textRenderer.Carets;
-
-		public ITextSelection? Selection => textRenderer.Selection;
+		public ITextSelectionManager SelectionManager => textRenderer.SelectionManager;
 
 		#region EditMode
 
@@ -202,6 +201,8 @@ namespace TextEdit.Text
 
 		public static readonly StyledProperty<bool> VirtualSpaceProperty
 			= AvaloniaProperty.Register<AbstractTextEditor, bool>(nameof(VirtualSpace), false);
+
+		#endregion
 
 		#endregion
 
