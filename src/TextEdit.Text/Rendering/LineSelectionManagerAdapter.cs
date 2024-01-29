@@ -16,7 +16,15 @@ namespace TextEdit.Text.Rendering
 			this.lineSelectionManager = lineSelectionManager;
 		}
 
+		#region Selections
+
 		public IReadOnlyList<TextHitRange> Selections => throw new NotImplementedException();
+
+		public event EventHandler<ITextSelectionRemovedEventArgs>? SelectionRemoved;
+		public event EventHandler<ITextSelectionInsertedEventArgs>? SelectionInserted;
+		public event EventHandler<ITextSelectionReplacedEventArgs>? SelectionReplaced;
+
+		#region Editing
 
 		public int Add(TextHitRange textHitRange)
 		{
@@ -33,11 +41,6 @@ namespace TextEdit.Text.Rendering
 			return lineSelectionManager.Add(lineHitRange);
 		}
 
-		public void Paste(string text)
-		{
-			lineSelectionManager.Paste(text);
-		}
-
 		public void RemoveAt(int index)
 		{
 			lineSelectionManager.RemoveAt(index);
@@ -46,6 +49,15 @@ namespace TextEdit.Text.Rendering
 		public void Clear()
 		{
 			lineSelectionManager.Clear();
+		}
+
+		#endregion
+
+		#endregion
+
+		public void Paste(string text)
+		{
+			lineSelectionManager.Paste(text);
 		}
 
 		public void CharLeft()

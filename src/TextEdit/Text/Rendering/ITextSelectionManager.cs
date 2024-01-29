@@ -5,7 +5,7 @@
 	/// </summary>
 	public interface ITextSelectionManager
 	{
-		#region SelectedRanges
+		#region Selections
 
 		/// <summary>
 		/// Gets collection of <see cref="TextHitRange"/> elements where each of them represents selection
