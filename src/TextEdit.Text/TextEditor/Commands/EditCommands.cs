@@ -74,7 +74,7 @@ namespace TextEdit.Text
 					}
 				}
 				
-				// ### NEEDS_CHECK
+				// ### NEEDS_TEST
 				// Maybe moving should be performed before removing
 				selection.WordLeft();
 			}
@@ -102,7 +102,7 @@ namespace TextEdit.Text
 					}
 				}
 
-				// ### NEEDS_CHECK
+				// ### NEEDS_TEST
 				// Maybe moving should be performed before removing
 				selection.CharLeft();
 			}
@@ -132,7 +132,7 @@ namespace TextEdit.Text
 					}
 				}
 
-				// ### NEEDS_CHECK
+				// ### NEEDS_TEST
 				// Maybe moving should be performed before removing
 			}
 		}

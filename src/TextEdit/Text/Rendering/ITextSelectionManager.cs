@@ -75,6 +75,16 @@
 		public void CharRight();
 
 		/// <summary>
+		/// Empties selection and moves carets to <paramref name="count"/> characters backward
+		/// </summary>
+		public void CharLeft(int count);
+
+		/// <summary>
+		/// Empties selection and moves carets to <paramref name="count"/> characters forward
+		/// </summary>
+		public void CharRight(int count);
+
+		/// <summary>
 		/// Empties selection and moves carets to the previous word boundary
 		/// </summary>
 		public void WordLeft();
@@ -163,6 +173,16 @@
 		/// Moves selection end to the next character
 		/// </summary>
 		public void SelectCharRight();
+
+		/// <summary>
+		/// Moves selection end to <paramref name="count"/> characters backward
+		/// </summary>
+		public void SelectCharLeft(int count);
+
+		/// <summary>
+		/// Moves selection end to <paramref name="count"/> characters forward
+		/// </summary>
+		public void SelectCharRight(int count);
 
 		/// <summary>
 		/// Moves selection end to the previous word boundary

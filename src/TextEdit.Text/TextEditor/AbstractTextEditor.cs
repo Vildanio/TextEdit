@@ -80,7 +80,7 @@ namespace TextEdit.Text
 
 		protected sealed override void OnTextInput(TextInputEventArgs e)
 		{
-			// ### NEEDS_CHECK
+			// ### NEEDS_TEST
 			string? text = e.Text;
 
 			// Preprocessing
@@ -95,7 +95,7 @@ namespace TextEdit.Text
 				}
 			}
 
-			// ### NEEDS_CHECK
+			// ### NEEDS_TEST
 
 			// If there are selections
 			if (!SelectionManager.IsEmpty())
@@ -107,24 +107,25 @@ namespace TextEdit.Text
 			// If there are only carets
 			else
 			{
-				// ### NEEDS_CHECK
+				// ### NEEDS_TEST
+
+				var textDocument = TextDocument;
 
 				// Insert mode implementation
 				if (EditMode == EditMode.Insert)
 				{
-					var textDocument = TextDocument;
-
 					foreach (var caretPosition in SelectionManager.EnumerateCarets())
 					{
 						textDocument.InsertString(caretPosition.CharacterIndex, text);
+
+						// Move caret to the end of inserted text
+						SelectionManager.CharRight(text.Length); // ### NEEDS_TEST
 					}
 				}
 
 				// Overstrike mode implementation
 				else if (EditMode == EditMode.Overstrike)
 				{
-					var textDocument = TextDocument;
-
 					foreach (var caretPosition in SelectionManager.EnumerateCarets())
 					{
 						int offset = caretPosition.CharacterIndex;
@@ -146,8 +147,8 @@ namespace TextEdit.Text
 							textDocument.RemoveRange(offset, charsToOverwrite);
 							textDocument.InsertString(offset, text);
 
-							// Move caret to the next character
-							//caretPosition.CharRight();
+							// Move caret to the end of inserted text
+							SelectionManager.CharRight(text.Length); // ### NEEDS_TEST
 						}
 					}
 				}
