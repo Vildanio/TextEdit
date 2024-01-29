@@ -17,6 +17,21 @@
 		public IReadOnlyList<TextHitRange> Selections { get; }
 
 		/// <summary>
+		/// Occurs when selection was removed
+		/// </summary>
+		public event EventHandler<ITextSelectionRemovedEventArgs>? SelectionRemoved;
+
+		/// <summary>
+		/// Occurs when new selection was added
+		/// </summary>
+		public event EventHandler<ITextSelectionInsertedEventArgs>? SelectionInserted;
+
+		/// <summary>
+		/// Occurs when selection was replaced by another
+		/// </summary>
+		public event EventHandler<ITextSelectionReplacedEventArgs>? SelectionReplaced;
+
+		/// <summary>
 		/// Adds <paramref name="textHitRange"/> to the <see cref="Selections"/> and returns index in it.
 		/// </summary>
 		/// <param name="textHitRange"></param>
