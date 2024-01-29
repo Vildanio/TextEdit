@@ -78,6 +78,8 @@ namespace TextEdit.Text
 			VisualChildren.Add(textRenderer);
 		}
 
+		#region TextInput
+
 		protected sealed override void OnTextInput(TextInputEventArgs e)
 		{
 			// ### NEEDS_TEST
@@ -154,6 +156,8 @@ namespace TextEdit.Text
 				}
 			}
 		}
+
+		#endregion
 
 		#region ITextEditor
 
