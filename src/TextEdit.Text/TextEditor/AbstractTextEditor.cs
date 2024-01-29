@@ -100,6 +100,10 @@ namespace TextEdit.Text
 
 		public ITextSelectionManager SelectionManager => textRenderer.SelectionManager;
 
+		public IUndoManager UndoManager => undoManager;
+
+		public IHotKeyManager HotKeyManager => hotKeyManager;
+
 		#region EditMode
 
 		public EditMode EditMode
@@ -112,23 +116,6 @@ namespace TextEdit.Text
 			= AvaloniaProperty.Register<AbstractTextEditor, EditMode>(nameof(EditMode), EditMode.Insert);
 
 		#endregion
-
-		#region SelectionMode
-
-		public SelectionMode SelectionMode
-		{
-			get => GetValue(SelectionModeProperty);
-			set => SetValue(SelectionModeProperty, value);
-		}
-
-		public static readonly StyledProperty<SelectionMode> SelectionModeProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, SelectionMode>(nameof(SelectionMode), SelectionMode.Plain);
-
-		#endregion
-
-		public IUndoManager UndoManager => undoManager;
-
-		public IHotKeyManager HotKeyManager => hotKeyManager;
 
 		#region Clipboard
 
@@ -150,18 +137,25 @@ namespace TextEdit.Text
 
 		#endregion
 
+		#region SelectionMode
+
+		public SelectionMode SelectionMode
+		{
+			get => textRenderer.SelectionMode;
+			set => textRenderer.SelectionMode = value;
+		}
+
+		#endregion
+
 		#region Options
 
 		#region WordWrap
 
 		public bool WordWrap
 		{
-			get => GetValue(WordWrapProperty);
-			set => SetValue(WordWrapProperty, value);
+			get => textRenderer.WordWrap;
+			set => textRenderer.WordWrap = value;
 		}
-
-		public static readonly StyledProperty<bool> WordWrapProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, bool>(nameof(WordWrap), false);
 
 		#endregion
 
@@ -169,12 +163,9 @@ namespace TextEdit.Text
 
 		public bool TextDragDrop
 		{
-			get => GetValue(TextDragDropProperty);
-			set => SetValue(TextDragDropProperty, value);
+			get => textRenderer.TextDragDrop;
+			set => textRenderer.TextDragDrop = value;
 		}
-
-		public static readonly StyledProperty<bool> TextDragDropProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, bool>(nameof(TextDragDrop), false);
 
 		#endregion
 
@@ -182,12 +173,9 @@ namespace TextEdit.Text
 
 		public bool ScrollBelowDocument
 		{
-			get => GetValue(ScrollBelowDocumentProperty);
-			set => SetValue(ScrollBelowDocumentProperty, value);
+			get => textRenderer.ScrollBelowDocument;
+			set => textRenderer.ScrollBelowDocument = value;
 		}
-
-		public static readonly StyledProperty<bool> ScrollBelowDocumentProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, bool>(nameof(ScrollBelowDocument), false);
 
 		#endregion
 
@@ -195,12 +183,9 @@ namespace TextEdit.Text
 
 		public bool VirtualSpace
 		{
-			get => GetValue(VirtualSpaceProperty);
-			set => SetValue(VirtualSpaceProperty, value);
+			get => textRenderer.VirtualSpace;
+			set => textRenderer.VirtualSpace = value;
 		}
-
-		public static readonly StyledProperty<bool> VirtualSpaceProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, bool>(nameof(VirtualSpace), false);
 
 		#endregion
 

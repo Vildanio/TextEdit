@@ -12,18 +12,22 @@ namespace TextEdit.Text
 		/// </summary>
 		public abstract ILineMetrics LineMetrics { get; }
 
-		#region WordWrap
-
-		public bool WordWrap { get; set; }
-
-		#endregion
-
-		#region Selections
-
 		/// <summary>
 		/// Gets selection manager.
 		/// </summary>
 		public abstract ITextSelectionManager SelectionManager { get; }
+
+		public abstract SelectionMode SelectionMode { get; set; }
+
+		#region Options
+
+		public abstract bool WordWrap { get; set; }
+
+		public abstract bool TextDragDrop { get; set; }
+
+		public abstract bool VirtualSpace { get; set; }
+
+		public abstract bool ScrollBelowDocument { get; set; }
 
 		#endregion
 	}
