@@ -1,6 +1,4 @@
-﻿using TextEdit.Line;
-
-namespace TextEdit.Line
+﻿namespace TextEdit.Line
 {
 	public interface ILineSelectionInsertedEventArgs
 	{

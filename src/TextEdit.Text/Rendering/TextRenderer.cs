@@ -8,16 +8,29 @@ namespace TextEdit.Text.Rendering
 		private readonly AbstractLineRenderer lineRenderer;
 		private readonly LineSelectionManagerAdapter selectionManager;
 
-		protected AbstractTextRenderer(AbstractLineRenderer lineRenderer)
+		protected AbstractTextRenderer(AbstractLineRenderer lineRenderer, ITextDocument textDocument)
 		{
 			this.lineRenderer = lineRenderer;
+			this.textDocument = textDocument;
 			this.selectionManager = new LineSelectionManagerAdapter(LineMetrics, lineRenderer.SelectionManager);
 		}
 
+		private ITextDocument textDocument;
+
 		public ITextDocument TextDocument
 		{
-			get => throw new NotImplementedException();
-			set => throw new NotImplementedException();
+			get => textDocument;
+			set
+			{
+				if(textDocument != value)
+				{
+					textDocument = value;
+
+					throw new NotImplementedException();
+
+					//lineRenderer.LineDocument = new VirtualLineDocument(value);
+				}
+			}
 		}
 
 		public ILineMetrics LineMetrics => throw new NotImplementedException();

@@ -65,8 +65,6 @@ namespace TextEdit.Collections
 
 		#region ICollection
 
-		bool ICollection<T>.IsReadOnly => IsReadOnly;
-
 		public virtual void Add(T item)
 		{
 			Insert(Count, item);
