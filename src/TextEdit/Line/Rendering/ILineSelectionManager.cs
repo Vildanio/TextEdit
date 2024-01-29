@@ -7,7 +7,7 @@ namespace TextEdit.Text
 	/// </summary>
 	public interface ILineSelectionManager
 	{
-		#region SelectedRanges
+		#region Selections
 
 		/// <summary>
 		/// Gets collection of <see cref="LineHitRange"/> elements where each of them represents selection
