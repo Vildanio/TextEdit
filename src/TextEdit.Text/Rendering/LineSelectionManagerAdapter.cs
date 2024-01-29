@@ -1,4 +1,5 @@
-﻿using TextEdit.Line;
+﻿using System.Collections;
+using TextEdit.Line;
 
 namespace TextEdit.Text.Rendering
 {
@@ -14,7 +15,45 @@ namespace TextEdit.Text.Rendering
 		{
 			this.lineMetrics = lineMetrics;
 			this.lineSelectionManager = lineSelectionManager;
+			this.lineSelectionManager.SelectionRemoved += LineSelectionManager_SelectionRemoved;
+			this.lineSelectionManager.SelectionInserted += LineSelectionManager_SelectionInserted;
+			this.lineSelectionManager.SelectionReplaced += LineSelectionManager_SelectionReplaced;
 		}
+
+		#region Event handlers
+
+		private void LineSelectionManager_SelectionRemoved(object? sender, ILineSelectionRemovedEventArgs e)
+		{
+			if (SelectionRemoved is not null)
+			{
+				var textHitRange = HitConverter.FromLineHitRange(e.Selection, lineMetrics);
+
+				SelectionRemoved.Invoke(this, new TextSelectionRemovedEventArgs(e.Index, textHitRange));
+			}
+		}
+
+		private void LineSelectionManager_SelectionInserted(object? sender, ILineSelectionInsertedEventArgs e)
+		{
+			if (SelectionInserted is not null)
+			{
+				var textHitRange = HitConverter.FromLineHitRange(e.Selection, lineMetrics);
+
+				SelectionInserted.Invoke(this, new TextSelectionInsertedEventArgs(e.Index, textHitRange));
+			}
+		}
+
+		private void LineSelectionManager_SelectionReplaced(object? sender, ILineSelectionReplacedEventArgs e)
+		{
+			if (SelectionReplaced is not null)
+			{
+				var oldTextHitRange = HitConverter.FromLineHitRange(e.OldSelection, lineMetrics);
+				var newTextHitRange = HitConverter.FromLineHitRange(e.NewSelection, lineMetrics);
+
+				SelectionReplaced.Invoke(this, new TextSelectionReplacedEventArgs(e.Index, oldTextHitRange, newTextHitRange));
+			}
+		}
+
+		#endregion
 
 		#region Selections
 
@@ -28,15 +67,7 @@ namespace TextEdit.Text.Rendering
 
 		public int Add(TextHitRange textHitRange)
 		{
-			// Get line position from text poisition
-			var start = lineMetrics.GetLinePositionByOffset(textHitRange.Start.CharacterIndex);
-			var end = lineMetrics.GetLinePositionByOffset(textHitRange.End.CharacterIndex);
-
-			// Recover the textHitRange in line coordintae system
-			var startHit = new LineHit(start.LineIndex, new TextHit(start.CharacterIndex, textHitRange.Start.TrailingLength));
-			var endHit = new LineHit(end.LineIndex, new TextHit(end.CharacterIndex, textHitRange.End.TrailingLength));
-
-			var lineHitRange = new LineHitRange(startHit, endHit);
+			var lineHitRange = HitConverter.FromTextHitRange(textHitRange, lineMetrics);
 
 			return lineSelectionManager.Add(lineHitRange);
 		}
