@@ -186,19 +186,6 @@ namespace TextEdit.Text
 
 		public IHotKeyManager HotKeyManager => hotKeyManager;
 
-		#region EditMode
-
-		public EditMode EditMode
-		{
-			get => GetValue(EditModeProperty);
-			set => SetValue(EditModeProperty, value);
-		}
-
-		public static readonly StyledProperty<EditMode> EditModeProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, EditMode>(nameof(EditMode), EditMode.Insert);
-
-		#endregion
-
 		#region Clipboard
 
 		public IClipboard Clipboard
@@ -219,7 +206,20 @@ namespace TextEdit.Text
 
 		#endregion
 
-		#region SelectionMode
+		#region Options
+
+		#region EditMode
+
+		public EditMode EditMode
+		{
+			get => GetValue(EditModeProperty);
+			set => SetValue(EditModeProperty, value);
+		}
+
+		public static readonly StyledProperty<EditMode> EditModeProperty
+			= AvaloniaProperty.Register<AbstractTextEditor, EditMode>(nameof(EditMode), EditMode.Insert);
+
+		#endregion
 
 		public SelectionMode SelectionMode
 		{
@@ -227,21 +227,11 @@ namespace TextEdit.Text
 			set => textRenderer.SelectionMode = value;
 		}
 
-		#endregion
-
-		#region Options
-
-		#region WordWrap
-
 		public bool WordWrap
 		{
 			get => textRenderer.WordWrap;
 			set => textRenderer.WordWrap = value;
 		}
-
-		#endregion
-
-		#region TextDragDrop
 
 		public bool TextDragDrop
 		{
@@ -249,27 +239,17 @@ namespace TextEdit.Text
 			set => textRenderer.TextDragDrop = value;
 		}
 
-		#endregion
-
-		#region ScrollBelowDocument
-
 		public bool ScrollBelowDocument
 		{
 			get => textRenderer.ScrollBelowDocument;
 			set => textRenderer.ScrollBelowDocument = value;
 		}
 
-		#endregion
-
-		#region VirtualSpace
-
 		public bool VirtualSpace
 		{
 			get => textRenderer.VirtualSpace;
 			set => textRenderer.VirtualSpace = value;
 		}
-
-		#endregion
 
 		#endregion
 

@@ -17,10 +17,6 @@ namespace TextEdit.Text
 
 		public ITextSelectionManager SelectionManager { get; }
 
-		public EditMode EditMode { get; set; }
-
-		public SelectionMode SelectionMode { get; set; }
-
 		public IClipboard Clipboard { get; }
 
 		public IUndoManager UndoManager { get; }
@@ -28,6 +24,10 @@ namespace TextEdit.Text
 		public IHotKeyManager HotKeyManager { get; }
 
 		#region Options
+
+		public EditMode EditMode { get; set; }
+
+		public SelectionMode SelectionMode { get; set; }
 
 		public bool WordWrap { get; set; }
 

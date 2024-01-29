@@ -1,27 +1,29 @@
-﻿namespace TextEdit.Text
+﻿using TextEdit.Line;
+
+namespace TextEdit.Text
 {
 	/// <summary>
 	/// Manages text selecting
 	/// </summary>
-	public interface ITextSelectionManager
+	public interface ILineSelectionManager
 	{
 		#region SelectedRanges
 
 		/// <summary>
-		/// Gets collection of <see cref="TextHitRange"/> elements where each of them represents selection
-		/// and the <see cref="TextHitRange.End"/> represents caret position. The primary selection is the first in the collection if collection is not empty.
+		/// Gets collection of <see cref="LineHitRange"/> elements where each of them represents selection
+		/// and the <see cref="LineHitRange.End"/> represents caret position. The primary selection is the first in the collection if collection is not empty.
 		/// </summary>
 		/// <remarks>
-		/// Note that the <see cref="TextHitRange"/> values can be invalid within <see cref="ITextDocument"/> if virtual space is enabled.
+		/// Note that the <see cref="LineHitRange"/> values can be invalid within <see cref="ILineDocument"/> if virtual space is enabled.
 		/// </remarks>
-		public IReadOnlyList<TextHitRange> Selections { get; }
+		public IReadOnlyList<LineHitRange> Selections { get; }
 
 		/// <summary>
-		/// Adds <paramref name="textHitRange"/> to the <see cref="Selections"/> and returns index in it.
+		/// Adds <paramref name="range"/> to the <see cref="Selections"/> and returns index in it.
 		/// </summary>
-		/// <param name="textHitRange"></param>
-		/// <returns>Index of the <paramref name="textHitRange"/> in <see cref="Selections"/></returns>
-		public int Add(TextHitRange textHitRange);
+		/// <param name="range"></param>
+		/// <returns>Index of the <paramref name="range"/> in <see cref="Selections"/></returns>
+		public int Add(LineHitRange range);
 
 		/// <summary>
 		/// Removes selection at the <paramref name="index"/> in <see cref="Selections"/>
