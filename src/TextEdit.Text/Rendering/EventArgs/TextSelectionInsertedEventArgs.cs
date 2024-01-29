@@ -4,12 +4,12 @@
 	{
 		public int Index { get; }
 
-		public TextHitRange TextSelection { get; }
+		public TextHitRange Selection { get; }
 
 		public TextSelectionInsertedEventArgs(int index, TextHitRange textSelection)
 		{
 			Index = index;
-			TextSelection = textSelection;
+			Selection = textSelection;
 		}
 	}
 }

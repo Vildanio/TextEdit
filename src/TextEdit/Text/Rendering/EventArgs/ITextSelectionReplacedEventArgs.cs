@@ -4,8 +4,8 @@
 	{
 		public int Index { get; }
 
-		public TextHitRange OldTextSelection { get; }
+		public TextHitRange OldSelection { get; }
 
-		public TextHitRange NewTextSelection { get; }
+		public TextHitRange NewSelection { get; }
 	}
 }

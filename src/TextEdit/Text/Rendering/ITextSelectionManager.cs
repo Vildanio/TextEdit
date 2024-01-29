@@ -31,6 +31,8 @@
 		/// </summary>
 		public event EventHandler<ITextSelectionReplacedEventArgs>? SelectionReplaced;
 
+		#region Editing
+
 		/// <summary>
 		/// Adds <paramref name="textHitRange"/> to the <see cref="Selections"/> and returns index in it.
 		/// </summary>
@@ -48,6 +50,8 @@
 		/// Removes all selections
 		/// </summary>
 		public void Clear();
+
+		#endregion
 
 		#endregion
 

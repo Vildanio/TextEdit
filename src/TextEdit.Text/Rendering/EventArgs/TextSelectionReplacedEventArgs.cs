@@ -4,15 +4,15 @@
 	{
 		public int Index { get; }
 
-		public TextHitRange OldTextSelection { get; }
+		public TextHitRange OldSelection { get; }
 
-		public TextHitRange NewTextSelection { get; }
+		public TextHitRange NewSelection { get; }
 
 		public TextSelectionReplacedEventArgs(int index, TextHitRange oldTextSelection, TextHitRange newTextSelection)
 		{
 			Index = index;
-			OldTextSelection = oldTextSelection;
-			NewTextSelection = newTextSelection;
+			OldSelection = oldTextSelection;
+			NewSelection = newTextSelection;
 		}
 	}
 }

@@ -4,6 +4,6 @@
 	{
 		public int Index { get; }
 
-		public TextHitRange TextSelection { get; }
+		public TextHitRange Selection { get; }
 	}
 }

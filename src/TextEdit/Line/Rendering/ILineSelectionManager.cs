@@ -19,6 +19,23 @@ namespace TextEdit.Text
 		public IReadOnlyList<LineHitRange> Selections { get; }
 
 		/// <summary>
+		/// Occurs when selection was removed
+		/// </summary>
+		public event EventHandler<ILineSelectionRemovedEventArgs>? SelectionRemoved;
+
+		/// <summary>
+		/// Occurs when new selection was added
+		/// </summary>
+		public event EventHandler<ILineSelectionInsertedEventArgs>? SelectionInserted;
+
+		/// <summary>
+		/// Occurs when selection was replaced by another
+		/// </summary>
+		public event EventHandler<ILineSelectionReplacedEventArgs>? SelectionReplaced;
+
+		#region Editing
+
+		/// <summary>
 		/// Adds <paramref name="range"/> to the <see cref="Selections"/> and returns index in it.
 		/// </summary>
 		/// <param name="range"></param>
@@ -35,6 +52,8 @@ namespace TextEdit.Text
 		/// Removes all selections
 		/// </summary>
 		public void Clear();
+
+		#endregion
 
 		#endregion
 
