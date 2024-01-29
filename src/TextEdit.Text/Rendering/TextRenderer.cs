@@ -6,10 +6,12 @@ namespace TextEdit.Text.Rendering
 	public abstract class AbstractTextRenderer : InputElement
 	{
 		private readonly AbstractLineRenderer lineRenderer;
+		private readonly LineSelectionManagerAdapter selectionManager;
 
 		protected AbstractTextRenderer(AbstractLineRenderer lineRenderer)
 		{
 			this.lineRenderer = lineRenderer;
+			this.selectionManager = new LineSelectionManagerAdapter(LineMetrics, lineRenderer.SelectionManager);
 		}
 
 		public ITextDocument TextDocument
@@ -20,7 +22,7 @@ namespace TextEdit.Text.Rendering
 
 		public ILineMetrics LineMetrics => throw new NotImplementedException();
 
-		public ITextSelectionManager SelectionManager => new LineSelectionManagerAdapter(LineMetrics, lineRenderer.SelectionManager);
+		public ITextSelectionManager SelectionManager => selectionManager;
 
 		#region Options
 

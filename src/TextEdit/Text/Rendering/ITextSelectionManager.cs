@@ -5,55 +5,15 @@
 	/// </summary>
 	public interface ITextSelectionManager
 	{
-		#region Selections
-
 		/// <summary>
 		/// Gets collection of <see cref="TextHitRange"/> elements where each of them represents selection
 		/// and the <see cref="TextHitRange.End"/> represents caret position. The primary selection is the first in the collection if collection is not empty.
 		/// </summary>
 		/// <remarks>
-		/// Note that the <see cref="TextHitRange"/> values can be invalid within <see cref="ITextDocument"/> if virtual space is enabled.
+		/// <para>Note that the <see cref="TextHitRange"/> values can be invalid within <see cref="ITextDocument"/> if virtual space is enabled.</para>
+		/// <para>It expected that this property is readonly and never changes</para>
 		/// </remarks>
-		public IReadOnlyList<TextHitRange> Selections { get; }
-
-		/// <summary>
-		/// Occurs when selection was removed
-		/// </summary>
-		public event EventHandler<ITextSelectionRemovedEventArgs>? SelectionRemoved;
-
-		/// <summary>
-		/// Occurs when new selection was added
-		/// </summary>
-		public event EventHandler<ITextSelectionInsertedEventArgs>? SelectionInserted;
-
-		/// <summary>
-		/// Occurs when selection was replaced by another
-		/// </summary>
-		public event EventHandler<ITextSelectionReplacedEventArgs>? SelectionReplaced;
-
-		#region Editing
-
-		/// <summary>
-		/// Adds <paramref name="textHitRange"/> to the <see cref="Selections"/> and returns index in it.
-		/// </summary>
-		/// <param name="textHitRange"></param>
-		/// <returns>Index of the <paramref name="textHitRange"/> in <see cref="Selections"/></returns>
-		public int Add(TextHitRange textHitRange);
-
-		/// <summary>
-		/// Removes selection at the <paramref name="index"/> in <see cref="Selections"/>
-		/// </summary>
-		/// <param name="index"></param>
-		public void RemoveAt(int index);
-
-		/// <summary>
-		/// Removes all selections
-		/// </summary>
-		public void Clear();
-
-		#endregion
-
-		#endregion
+		public ITextSelectionList Selections { get; }
 
 		#region Editing
 

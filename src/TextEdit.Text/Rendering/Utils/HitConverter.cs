@@ -4,7 +4,7 @@ namespace TextEdit.Text.Rendering
 {
 	internal static class HitConverter
 	{
-		public static TextHitRange FromLineHitRange(LineHitRange lineHitRange, ILineMetrics lineMetrics)
+		public static TextHitRange ToTextHitRange(LineHitRange lineHitRange, ILineMetrics lineMetrics)
 		{
 			// Get text position from line position
 			var start = lineMetrics.GetOffsetByPosition(new LinePosition(lineHitRange.Start.LineIndex, lineHitRange.Start.TextHit.CharacterIndex));
@@ -17,7 +17,7 @@ namespace TextEdit.Text.Rendering
 			return new TextHitRange(startHit, endHit);
 		}
 
-		public static LineHitRange FromTextHitRange(TextHitRange textHitRange, ILineMetrics lineMetrics)
+		public static LineHitRange ToLineHitRange(TextHitRange textHitRange, ILineMetrics lineMetrics)
 		{
 			// Get line position from text poisition
 			var start = lineMetrics.GetLinePositionByOffset(textHitRange.Start.CharacterIndex);

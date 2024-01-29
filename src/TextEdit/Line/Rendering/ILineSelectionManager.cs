@@ -7,55 +7,15 @@ namespace TextEdit.Text
 	/// </summary>
 	public interface ILineSelectionManager
 	{
-		#region Selections
-
 		/// <summary>
 		/// Gets collection of <see cref="LineHitRange"/> elements where each of them represents selection
 		/// and the <see cref="LineHitRange.End"/> represents caret position. The primary selection is the first in the collection if collection is not empty.
 		/// </summary>
 		/// <remarks>
-		/// Note that the <see cref="LineHitRange"/> values can be invalid within <see cref="ILineDocument"/> if virtual space is enabled.
+		/// <para>Note that the <see cref="LineHitRange"/> values can be invalid within <see cref="ILineDocument"/> if virtual space is enabled.</para>
+		/// <para>It expected that this property is readonly and never changes</para>
 		/// </remarks>
-		public IReadOnlyList<LineHitRange> Selections { get; }
-
-		/// <summary>
-		/// Occurs when selection was removed
-		/// </summary>
-		public event EventHandler<ILineSelectionRemovedEventArgs>? SelectionRemoved;
-
-		/// <summary>
-		/// Occurs when new selection was added
-		/// </summary>
-		public event EventHandler<ILineSelectionInsertedEventArgs>? SelectionInserted;
-
-		/// <summary>
-		/// Occurs when selection was replaced by another
-		/// </summary>
-		public event EventHandler<ILineSelectionReplacedEventArgs>? SelectionReplaced;
-
-		#region Editing
-
-		/// <summary>
-		/// Adds <paramref name="range"/> to the <see cref="Selections"/> and returns index in it.
-		/// </summary>
-		/// <param name="range"></param>
-		/// <returns>Index of the <paramref name="range"/> in <see cref="Selections"/></returns>
-		public int Add(LineHitRange range);
-
-		/// <summary>
-		/// Removes selection at the <paramref name="index"/> in <see cref="Selections"/>
-		/// </summary>
-		/// <param name="index"></param>
-		public void RemoveAt(int index);
-
-		/// <summary>
-		/// Removes all selections
-		/// </summary>
-		public void Clear();
-
-		#endregion
-
-		#endregion
+		public ILineSelectionList Selections { get; }
 
 		#region Editing
 

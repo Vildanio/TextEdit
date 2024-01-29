@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TextEdit.Line;
+﻿using TextEdit.Line;
 
 namespace TextEdit.Text.Rendering
 {
@@ -8,83 +7,16 @@ namespace TextEdit.Text.Rendering
 	/// </summary>
 	internal sealed class LineSelectionManagerAdapter : ITextSelectionManager
 	{
-		private readonly ILineMetrics lineMetrics;
+		private readonly LineSelectionListAdapter textSelectionList;
 		private readonly ILineSelectionManager lineSelectionManager;
 
 		public LineSelectionManagerAdapter(ILineMetrics lineMetrics, ILineSelectionManager lineSelectionManager)
 		{
-			this.lineMetrics = lineMetrics;
 			this.lineSelectionManager = lineSelectionManager;
-			this.lineSelectionManager.SelectionRemoved += LineSelectionManager_SelectionRemoved;
-			this.lineSelectionManager.SelectionInserted += LineSelectionManager_SelectionInserted;
-			this.lineSelectionManager.SelectionReplaced += LineSelectionManager_SelectionReplaced;
+			this.textSelectionList = new LineSelectionListAdapter(lineMetrics, lineSelectionManager.Selections);
 		}
 
-		#region Event handlers
-
-		private void LineSelectionManager_SelectionRemoved(object? sender, ILineSelectionRemovedEventArgs e)
-		{
-			if (SelectionRemoved is not null)
-			{
-				var textHitRange = HitConverter.FromLineHitRange(e.Selection, lineMetrics);
-
-				SelectionRemoved.Invoke(this, new TextSelectionRemovedEventArgs(e.Index, textHitRange));
-			}
-		}
-
-		private void LineSelectionManager_SelectionInserted(object? sender, ILineSelectionInsertedEventArgs e)
-		{
-			if (SelectionInserted is not null)
-			{
-				var textHitRange = HitConverter.FromLineHitRange(e.Selection, lineMetrics);
-
-				SelectionInserted.Invoke(this, new TextSelectionInsertedEventArgs(e.Index, textHitRange));
-			}
-		}
-
-		private void LineSelectionManager_SelectionReplaced(object? sender, ILineSelectionReplacedEventArgs e)
-		{
-			if (SelectionReplaced is not null)
-			{
-				var oldTextHitRange = HitConverter.FromLineHitRange(e.OldSelection, lineMetrics);
-				var newTextHitRange = HitConverter.FromLineHitRange(e.NewSelection, lineMetrics);
-
-				SelectionReplaced.Invoke(this, new TextSelectionReplacedEventArgs(e.Index, oldTextHitRange, newTextHitRange));
-			}
-		}
-
-		#endregion
-
-		#region Selections
-
-		public IReadOnlyList<TextHitRange> Selections => throw new NotImplementedException();
-
-		public event EventHandler<ITextSelectionRemovedEventArgs>? SelectionRemoved;
-		public event EventHandler<ITextSelectionInsertedEventArgs>? SelectionInserted;
-		public event EventHandler<ITextSelectionReplacedEventArgs>? SelectionReplaced;
-
-		#region Editing
-
-		public int Add(TextHitRange textHitRange)
-		{
-			var lineHitRange = HitConverter.FromTextHitRange(textHitRange, lineMetrics);
-
-			return lineSelectionManager.Add(lineHitRange);
-		}
-
-		public void RemoveAt(int index)
-		{
-			lineSelectionManager.RemoveAt(index);
-		}
-
-		public void Clear()
-		{
-			lineSelectionManager.Clear();
-		}
-
-		#endregion
-
-		#endregion
+		public ITextSelectionList Selections => textSelectionList;
 
 		public void Paste(string text)
 		{
