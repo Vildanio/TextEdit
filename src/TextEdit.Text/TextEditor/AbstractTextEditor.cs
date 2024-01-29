@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using TextEdit.Line;
+using TextEdit.Text.Rendering;
 
 namespace TextEdit.Text
 {
@@ -75,6 +76,82 @@ namespace TextEdit.Text
 			this.undoManager = new TextDocumentChangeManager(textRenderer.TextDocument);
 			
 			VisualChildren.Add(textRenderer);
+		}
+
+		protected sealed override void OnTextInput(TextInputEventArgs e)
+		{
+			// ### NEEDS_CHECK
+			string? text = e.Text;
+
+			// Preprocessing
+			{
+				// If input text is not valid
+				if (string.IsNullOrEmpty(text) || text == "\x1b" || text == "\b")
+				{
+					// ASCII 0x1b = ESC.
+					// Some shortcuts like Alt+Space produce an empty TextInput event in WPF
+					// We have to ignore those
+					return;
+				}
+			}
+
+			// ### NEEDS_CHECK
+
+			// If there are selections
+			if (!SelectionManager.IsEmpty())
+			{
+				// Replace selection with text
+				SelectionManager.Paste(text);
+			}
+
+			// If there are only carets
+			else
+			{
+				// ### NEEDS_CHECK
+
+				// Insert mode implementation
+				if (EditMode == EditMode.Insert)
+				{
+					var textDocument = TextDocument;
+
+					foreach (var caretPosition in SelectionManager.EnumerateCarets())
+					{
+						textDocument.InsertString(caretPosition.CharacterIndex, text);
+					}
+				}
+
+				// Overstrike mode implementation
+				else if (EditMode == EditMode.Overstrike)
+				{
+					var textDocument = TextDocument;
+
+					foreach (var caretPosition in SelectionManager.EnumerateCarets())
+					{
+						int offset = caretPosition.CharacterIndex;
+
+						// When caret before line ending or at the end of text
+						if (offset == textDocument.Count || textDocument[offset].IsLineTerminator())
+						{
+							// Simply insert characters
+							textDocument.InsertString(offset, text);
+						}
+						else
+						{
+							int lineEnd = LineMetrics.GetLineEndFromOffset(offset);
+
+							// When text to insert is greater than characters that can be overwrited,
+							// then we should simply insert remaining characters
+							int charsToOverwrite = text.Length - (lineEnd - offset);
+
+							textDocument.RemoveRange(offset, charsToOverwrite);
+							textDocument.InsertString(offset, text);
+
+							// Move caret to the next character
+							//caretPosition.CharRight();
+						}
+					}
+				}
+			}
 		}
 
 		#region ITextEditor
