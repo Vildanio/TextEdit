@@ -6,7 +6,7 @@
 		/// Gets caret and end position of the selection
 		/// </summary>
 		public IVisualCaret Caret { get; }
-		
+
 		/// <summary>
 		/// Gets position where selection started
 		/// </summary>

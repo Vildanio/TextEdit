@@ -13,13 +13,13 @@
 		}
 
 		public void Undo()
-        {
+		{
 			Document[EventArgs.Index] = EventArgs.OldChar;
-        }
+		}
 
-        public void Redo()
-        {
+		public void Redo()
+		{
 			Document[EventArgs.Index] = EventArgs.NewChar;
-        }
-    }
+		}
+	}
 }

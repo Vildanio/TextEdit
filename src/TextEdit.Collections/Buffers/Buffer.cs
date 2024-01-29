@@ -3,12 +3,12 @@
 namespace TextEdit.Collections
 {
 	public abstract class Buffer<T> : IBuffer<T>
-    {
+	{
 		#region IBuffer
 
 		#region IReadOnlyBuffer
 
-        public abstract bool IsReadOnly { get; }
+		public abstract bool IsReadOnly { get; }
 
 		#region IReadOnlyList
 
@@ -19,9 +19,9 @@ namespace TextEdit.Collections
 		#region IEnumerable
 
 		IEnumerator IEnumerable.GetEnumerator()
-            => GetEnumerator();
+			=> GetEnumerator();
 
-        public abstract IEnumerator<T> GetEnumerator();
+		public abstract IEnumerator<T> GetEnumerator();
 
 		#endregion
 
@@ -117,16 +117,16 @@ namespace TextEdit.Collections
 
 		public abstract void RemoveAt(int index);
 
-        public abstract void Insert(int index, T item);
+		public abstract void Insert(int index, T item);
 
 		#endregion
 
-        public abstract void RemoveRange(int index, int count);
+		public abstract void RemoveRange(int index, int count);
 
-        public abstract void InsertSpan(int index, ReadOnlySpan<T> span);
+		public abstract void InsertSpan(int index, ReadOnlySpan<T> span);
 
-        public abstract void InsertRange(int index, IEnumerable<T> enumerable);
+		public abstract void InsertRange(int index, IEnumerable<T> enumerable);
 
-        #endregion
-    }
+		#endregion
+	}
 }

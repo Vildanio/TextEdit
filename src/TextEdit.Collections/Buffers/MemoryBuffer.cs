@@ -7,8 +7,8 @@ namespace TextEdit.Collections
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public class MemoryBuffer<T> : ImmutableBuffer<T>, IEquatable<MemoryBuffer<T>>
-        where T : IEquatable<T>
-    {
+		where T : IEquatable<T>
+	{
 		#region Static
 
 		public static MemoryBuffer<T> Empty { get; } = new MemoryBuffer<T>(default, default);
@@ -19,9 +19,9 @@ namespace TextEdit.Collections
 		/// <param name="memory"></param>
 		/// <returns></returns>
 		public static MemoryBuffer<T> CreateUnsafe(ReadOnlyMemory<T> memory)
-        {
-            return new MemoryBuffer<T>(memory, default);
-        }
+		{
+			return new MemoryBuffer<T>(memory, default);
+		}
 
 		#endregion
 
@@ -34,19 +34,19 @@ namespace TextEdit.Collections
 		/// </summary>
 		/// <param name="memory"></param>
 		public MemoryBuffer(ReadOnlyMemory<T> memory)
-            : this(memory.ToArray().AsMemory(), default)
-        {
-            
-        }
+			: this(memory.ToArray().AsMemory(), default)
+		{
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryBuffer{T}"/> class
-        /// </summary>
-        /// <param name="memory"></param>
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MemoryBuffer{T}"/> class
+		/// </summary>
+		/// <param name="memory"></param>
 		private MemoryBuffer(ReadOnlyMemory<T> memory, bool stub)
-        {
-            this.Memory = memory;
-        }
+		{
+			this.Memory = memory;
+		}
 
 		#endregion
 
@@ -70,88 +70,88 @@ namespace TextEdit.Collections
 		#endregion
 
 		public override ReadOnlyMemory<T> AsMemory(int start, int count)
-        {
-            return Memory.Slice(start, count);
-        }
+		{
+			return Memory.Slice(start, count);
+		}
 
 		public override ReadOnlySpan<T> AsSpan(int start, int count)
-        {
-            return Memory.Span.Slice(start, count);
-        }
+		{
+			return Memory.Span.Slice(start, count);
+		}
 
 		public override void CopyTo(int index, int count, Span<T> span)
-        {
-            Memory.Span.Slice(index, count).CopyTo(span);
-        }
+		{
+			Memory.Span.Slice(index, count).CopyTo(span);
+		}
 
 		public override void CopyTo(int sourceIndex, T[] destination, int destinationIndex, int count)
-        {
-            Span<T> destinationSpan = destination.AsSpan(destinationIndex, count);
+		{
+			Span<T> destinationSpan = destination.AsSpan(destinationIndex, count);
 
-            Memory.Span.Slice(sourceIndex, count).CopyTo(destinationSpan);
-        }
+			Memory.Span.Slice(sourceIndex, count).CopyTo(destinationSpan);
+		}
 
 		public override int IndexOf(T value, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).IndexOf(value);
-        }
+		{
+			return Memory.Span.Slice(startIndex).IndexOf(value);
+		}
 
 		public override int IndexOf(ReadOnlySpan<T> value, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).IndexOf(value);
-        }
+		{
+			return Memory.Span.Slice(startIndex).IndexOf(value);
+		}
 
 		public override int LastIndexOf(T value, int startIndex)
-        {
-            return Memory.Span.Slice(0, startIndex).LastIndexOf(value);
-        }
+		{
+			return Memory.Span.Slice(0, startIndex).LastIndexOf(value);
+		}
 
 		public override int LastIndexOf(ReadOnlySpan<T> value, int startIndex)
-        {
-            return Memory.Span.Slice(0, startIndex).LastIndexOf(value);
-        }
+		{
+			return Memory.Span.Slice(0, startIndex).LastIndexOf(value);
+		}
 
 		public override int IndexOfAny(T value0, T value1, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).IndexOfAny(value0, value1);
-        }
+		{
+			return Memory.Span.Slice(startIndex).IndexOfAny(value0, value1);
+		}
 
 		public override int IndexOfAny(T value0, T value1, T value2, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).IndexOfAny(value0, value1, value2);
-        }
+		{
+			return Memory.Span.Slice(startIndex).IndexOfAny(value0, value1, value2);
+		}
 
 		public override int IndexOfAny(IEnumerable<T> items, int startIndex)
-        {
-            // TODO: Optimize
-            return Memory.Span.Slice(startIndex).IndexOfAny(items.ToArray().AsSpan());
-        }
+		{
+			// TODO: Optimize
+			return Memory.Span.Slice(startIndex).IndexOfAny(items.ToArray().AsSpan());
+		}
 
 		public override int IndexOfAny(ReadOnlySpan<T> items, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).IndexOfAny(items);
-        }
+		{
+			return Memory.Span.Slice(startIndex).IndexOfAny(items);
+		}
 
 		public override int LastIndexOfAny(T value0, T value1, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).LastIndexOfAny(value0, value1);
-        }
+		{
+			return Memory.Span.Slice(startIndex).LastIndexOfAny(value0, value1);
+		}
 
 		public override int LastIndexOfAny(T value0, T value1, T value2, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).LastIndexOfAny(value0, value1, value2);
-        }
+		{
+			return Memory.Span.Slice(startIndex).LastIndexOfAny(value0, value1, value2);
+		}
 
 		public override int LastIndexOfAny(IEnumerable<T> items, int startIndex)
-        {
-            // TODO: Optimize
-            return Memory.Span.Slice(startIndex).LastIndexOfAny(items.ToArray().AsSpan());
-        }
+		{
+			// TODO: Optimize
+			return Memory.Span.Slice(startIndex).LastIndexOfAny(items.ToArray().AsSpan());
+		}
 
 		public override int LastIndexOfAny(ReadOnlySpan<T> items, int startIndex)
-        {
-            return Memory.Span.Slice(startIndex).LastIndexOfAny(items);
-        }
+		{
+			return Memory.Span.Slice(startIndex).LastIndexOfAny(items);
+		}
 
 		#endregion
 

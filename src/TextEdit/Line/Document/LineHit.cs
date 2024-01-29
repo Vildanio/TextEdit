@@ -48,11 +48,11 @@ namespace TextEdit.Line
 
 		public static bool operator <(LineHit left, LineHit right)
 		{
-			if(left.LineIndex < right.LineIndex)
+			if (left.LineIndex < right.LineIndex)
 			{
 				return true;
 			}
-			else if(left.LineIndex == right.LineIndex)
+			else if (left.LineIndex == right.LineIndex)
 			{
 				return left.TextHit < right.TextHit;
 			}

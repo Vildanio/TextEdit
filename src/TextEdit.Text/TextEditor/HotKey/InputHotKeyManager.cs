@@ -14,7 +14,7 @@ namespace TextEdit.Text
 		public InputHotKeyManager(AbstractTextEditor textEditor)
 			: this(textEditor, new List<HotkeyBinding>())
 		{
-			
+
 		}
 
 		public InputHotKeyManager(AbstractTextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
@@ -68,15 +68,15 @@ namespace TextEdit.Text
 			foreach (var hotKey in hotKeys)
 			{
 				var hotKeyGesture = hotKey.KeyGesture;
-				
-				if (hotKeyGesture.FirstGesture == firstKeyGesture && 
+
+				if (hotKeyGesture.FirstGesture == firstKeyGesture &&
 					hotKeyGesture.SecondGesture == secondKeyGesture)
 				{
 					if (hotKey.OnPressCommand.CanExecute(textEditor))
 					{
 						hotKey.OnPressCommand.Execute(textEditor);
 
-						if(hotKey.OnReleaseCommand is not null)
+						if (hotKey.OnReleaseCommand is not null)
 						{
 							activeHotKey = hotKey;
 						}

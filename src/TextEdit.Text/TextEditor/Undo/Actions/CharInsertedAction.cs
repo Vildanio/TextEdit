@@ -13,13 +13,13 @@
 		}
 
 		public void Undo()
-        {
+		{
 			Document.RemoveAt(EventArgs.Index);
-        }
+		}
 
-        public void Redo()
-        {
+		public void Redo()
+		{
 			Document.Insert(EventArgs.Index, EventArgs.Char);
-        }
-    }
+		}
+	}
 }

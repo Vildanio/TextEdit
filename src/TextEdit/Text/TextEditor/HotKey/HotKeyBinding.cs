@@ -22,7 +22,7 @@
 		/// <param name="onPress"></param>
 		/// <param name="onRelease"></param>
 		public HotkeyBinding(HotkeyGesture keyGesture, ITextEditorCommand onPress, ITextEditorCommand onRelease)
-        {
+		{
 			ThrowHelper.ThrowIfNull(keyGesture);
 			ThrowHelper.ThrowIfNull(onPress);
 			ThrowHelper.ThrowIfNull(onRelease);

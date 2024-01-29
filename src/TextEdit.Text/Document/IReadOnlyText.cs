@@ -2,12 +2,12 @@
 
 namespace TextEdit.Text
 {
-    /// <summary>
-    /// Provides read-only access to underlying <see cref="char"/> buffer
-    /// </summary>
-    public interface IReadOnlyText : IReadOnlyBuffer<char>
-    {
-        public new static IReadOnlyText Empty { get; } = new StringText();
+	/// <summary>
+	/// Provides read-only access to underlying <see cref="char"/> buffer
+	/// </summary>
+	public interface IReadOnlyText : IReadOnlyBuffer<char>
+	{
+		public new static IReadOnlyText Empty { get; } = new StringText();
 
 		/// <summary>
 		/// Creates a new instance of the text with the same value
@@ -27,5 +27,5 @@ namespace TextEdit.Text
 		{
 			return AsString(0, Count);
 		}
-    }
+	}
 }

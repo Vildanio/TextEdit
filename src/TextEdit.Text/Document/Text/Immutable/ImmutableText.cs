@@ -1,7 +1,7 @@
 ﻿namespace TextEdit.Text
 {
 	public abstract class ImmutableText : Text
-    {
+	{
 		public sealed override bool IsReadOnly => true;
 
 		public sealed override char this[int index]

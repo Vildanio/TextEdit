@@ -3,8 +3,8 @@
 namespace TextEdit.Text
 {
 	public abstract class TextBuffer : Text
-    {
-        protected IBuffer<char> Buffer { get; }
+	{
+		protected IBuffer<char> Buffer { get; }
 
 		protected TextBuffer(IBuffer<char> buffer)
 		{

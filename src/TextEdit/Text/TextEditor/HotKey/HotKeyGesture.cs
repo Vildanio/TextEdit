@@ -11,18 +11,18 @@ namespace TextEdit.Text
 
 		public KeyGesture? SecondGesture { get; }
 
-        public HotkeyGesture(Key key, KeyModifiers modifiers = KeyModifiers.None)
+		public HotkeyGesture(Key key, KeyModifiers modifiers = KeyModifiers.None)
 			: this(new KeyGesture(key))
-        {
-            
-        }
+		{
 
-        public HotkeyGesture(KeyGesture firstGesture, KeyGesture? secondGesture = null)
+		}
+
+		public HotkeyGesture(KeyGesture firstGesture, KeyGesture? secondGesture = null)
 		{
 			ThrowHelper.ThrowIfNull(firstGesture);
 
 			FirstGesture = firstGesture;
 			SecondGesture = secondGesture;
 		}
-    }
+	}
 }

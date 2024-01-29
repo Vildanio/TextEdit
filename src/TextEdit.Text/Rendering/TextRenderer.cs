@@ -22,7 +22,7 @@ namespace TextEdit.Text.Rendering
 			get => textDocument;
 			set
 			{
-				if(textDocument != value)
+				if (textDocument != value)
 				{
 					textDocument = value;
 

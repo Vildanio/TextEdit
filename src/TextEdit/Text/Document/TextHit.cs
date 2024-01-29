@@ -44,13 +44,13 @@ namespace TextEdit.Text
 		/// <param name="characterIndex"></param>
 		/// <param name="trailingLength"></param>
 		public TextHit(int characterIndex, int trailingLength)
-        {
+		{
 			ThrowHelper.ThrowIfNegative(characterIndex);
 			ThrowHelper.ThrowIfNegative(trailingLength);
 
 			CharacterIndex = characterIndex;
 			TrailingLength = trailingLength;
-        }
+		}
 
 		#endregion
 
@@ -70,7 +70,7 @@ namespace TextEdit.Text
 
 		#region Operators
 
-		public static bool operator<(TextHit left, TextHit right)
+		public static bool operator <(TextHit left, TextHit right)
 		{
 			return left.GetLastCharacterIndex() < right.GetLastCharacterIndex();
 		}

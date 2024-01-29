@@ -5,20 +5,20 @@ using TextEdit.Collections;
 namespace TextEdit.Visual
 {
 	public class VisualGroup : IVisualGroup
-    {
-        private readonly Buffer<IVisual> buffer;
+	{
+		private readonly Buffer<IVisual> buffer;
 
-        #region Static
+		#region Static
 
-        public static VisualGroup ListBuffer()
-        {
-            return CreateUnsafe(new ListBuffer<IVisual>());
-        }
+		public static VisualGroup ListBuffer()
+		{
+			return CreateUnsafe(new ListBuffer<IVisual>());
+		}
 
-        public static VisualGroup ListBuffer(int capacity)
-        {
-            return CreateUnsafe(new ListBuffer<IVisual>(capacity));
-        }
+		public static VisualGroup ListBuffer(int capacity)
+		{
+			return CreateUnsafe(new ListBuffer<IVisual>(capacity));
+		}
 
 		/// <summary>
 		/// Creates <see cref="VisualGroup"/> and uses the given <paramref name="buffer"/> without copy.
@@ -58,23 +58,23 @@ namespace TextEdit.Visual
 		/// </summary>
 		/// <param name="buffer"></param>
 		private VisualGroup(Buffer<IVisual> buffer)
-        {
-            this.buffer = buffer;
-        }
+		{
+			this.buffer = buffer;
+		}
 
-        #endregion
+		#endregion
 
-        #region IVisualGroup
+		#region IVisualGroup
 
-        #region IReadOnlyVisualGroup
+		#region IReadOnlyVisualGroup
 
-        #region IReadOnlyBuffer
+		#region IReadOnlyBuffer
 
-        #region IReadOnlyList
+		#region IReadOnlyList
 
-        #region IEnumerable
+		#region IEnumerable
 
-        public IEnumerator<IVisual> GetEnumerator()
+		public IEnumerator<IVisual> GetEnumerator()
 		{
 			return buffer.GetEnumerator();
 		}
@@ -88,18 +88,18 @@ namespace TextEdit.Visual
 
 		public int Count => buffer.Count;
 
-        public IVisual this[int index]
-        {
-            get
-            {
-                return buffer[index];
-            }
+		public IVisual this[int index]
+		{
+			get
+			{
+				return buffer[index];
+			}
 
-            set
-            {
-                buffer[index] = value;
-            }
-        }
+			set
+			{
+				buffer[index] = value;
+			}
+		}
 
 		#endregion
 
@@ -196,76 +196,76 @@ namespace TextEdit.Visual
 		#endregion
 
 		public virtual int GetIndex(double height)
-        {
+		{
 			ThrowHelper.ThrowIfNegative(height);
 
-            int i = 0;
-            double bottom = 0;
+			int i = 0;
+			double bottom = 0;
 
-            for (; i < buffer.Count; i++)
-            {
-                IVisual visualLine = buffer[i];
+			for (; i < buffer.Count; i++)
+			{
+				IVisual visualLine = buffer[i];
 
-                if (height >= bottom && height <= bottom + visualLine.Height)
-                {
-                    break;
-                }
+				if (height >= bottom && height <= bottom + visualLine.Height)
+				{
+					break;
+				}
 
-                bottom += visualLine.Height;
-            }
+				bottom += visualLine.Height;
+			}
 
-            return i;
-        }
+			return i;
+		}
 
-        public virtual double GetHeight(int start, int count)
-        {
-            ThrowHelper.ThrowIfOutOfRange(start, count, Count);
+		public virtual double GetHeight(int start, int count)
+		{
+			ThrowHelper.ThrowIfOutOfRange(start, count, Count);
 
-            double height = 0;
+			double height = 0;
 
-            for (int i = start; i < start + count; i++)
-            {
-                IVisual visualLine = buffer[i];
+			for (int i = start; i < start + count; i++)
+			{
+				IVisual visualLine = buffer[i];
 
-                height += visualLine.Height;
-            }
+				height += visualLine.Height;
+			}
 
-            return height;
-        }
+			return height;
+		}
 
-        public virtual double GetWidth(int start, int count)
-        {
-            ThrowHelper.ThrowIfOutOfRange(start, count, Count);
+		public virtual double GetWidth(int start, int count)
+		{
+			ThrowHelper.ThrowIfOutOfRange(start, count, Count);
 
-            double width = 0;
+			double width = 0;
 
-            for (int i = start; i < start + count; i++)
-            {
-                IVisual visualLine = buffer[i];
+			for (int i = start; i < start + count; i++)
+			{
+				IVisual visualLine = buffer[i];
 
-                width = Math.Max(width, visualLine.Width);
-            }
+				width = Math.Max(width, visualLine.Width);
+			}
 
-            return width;
-        }
+			return width;
+		}
 
-        public virtual Size GetBounds(int start, int count)
-        {
-            ThrowHelper.ThrowIfOutOfRange(start, count, Count);
+		public virtual Size GetBounds(int start, int count)
+		{
+			ThrowHelper.ThrowIfOutOfRange(start, count, Count);
 
-            double width = 0;
-            double height = 0;
+			double width = 0;
+			double height = 0;
 
-            for (int i = start; i < start + count; i++)
-            {
-                IVisual visualLine = buffer[i];
+			for (int i = start; i < start + count; i++)
+			{
+				IVisual visualLine = buffer[i];
 
-                height += visualLine.Height;
-                width = Math.Max(width, visualLine.Width);
-            }
+				height += visualLine.Height;
+				width = Math.Max(width, visualLine.Width);
+			}
 
-            return new Size(width, height);
-        }
+			return new Size(width, height);
+		}
 
 		#endregion
 

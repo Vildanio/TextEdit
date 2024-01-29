@@ -12,197 +12,197 @@ namespace TextEdit.Collections
 	/// </summary>
 	/// <typeparam name="T">The type of elements in the buffer</typeparam>
 	public class GapBuffer<T> : Buffer<T>, IEquatable<GapBuffer<T>>
-        where T : IEquatable<T>
-    {
-        #region Fields
+		where T : IEquatable<T>
+	{
+		#region Fields
 
-        private const int DefaultCapacity = 4;
+		private const int DefaultCapacity = 4;
 
-        private T[] array;
-        private int gapStart;
-        private int gapEnd;
-        private int version;
+		private T[] array;
+		private int gapStart;
+		private int gapEnd;
+		private int version;
 
-        private int GapCount => gapEnd - gapStart;
+		private int GapCount => gapEnd - gapStart;
 
-        #endregion Fields
+		#endregion Fields
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
-        /// </summary>
-        public GapBuffer()
-            : this(DefaultCapacity)
-        {
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
+		/// </summary>
+		public GapBuffer()
+			: this(DefaultCapacity)
+		{
 
-        }
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
-        /// </summary>
-        /// <param name="capacity"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public GapBuffer(int capacity)
-        {
-            array = new T[capacity];
-            gapEnd = capacity;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
+		/// </summary>
+		/// <param name="capacity"></param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public GapBuffer(int capacity)
+		{
+			array = new T[capacity];
+			gapEnd = capacity;
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
-        /// </summary>
-        /// <param name="span"></param>
-        public GapBuffer(ReadOnlySpan<T> span)
-        {
-            array = new T[span.Length];
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GapBuffer{T}"/> class.
+		/// </summary>
+		/// <param name="span"></param>
+		public GapBuffer(ReadOnlySpan<T> span)
+		{
+			array = new T[span.Length];
 
-            span.CopyTo(array);
-        }
+			span.CopyTo(array);
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GapBuffer{T}"/> class
-        /// </summary>
-        /// <param name="enumerable"></param>
-        public GapBuffer(IEnumerable<T> enumerable)
-        {
-            ThrowHelper.ThrowIfNull(enumerable);
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GapBuffer{T}"/> class
+		/// </summary>
+		/// <param name="enumerable"></param>
+		public GapBuffer(IEnumerable<T> enumerable)
+		{
+			ThrowHelper.ThrowIfNull(enumerable);
 
-            if (enumerable is GapBuffer<T> buffer)
-            {
-                this.array = buffer.array;
-                gapEnd = buffer.gapEnd;
-                gapStart = buffer.gapStart;
-            }
-            else
-            {
-                this.array = enumerable.ToArray();
-            }
-        }
+			if (enumerable is GapBuffer<T> buffer)
+			{
+				this.array = buffer.array;
+				gapEnd = buffer.gapEnd;
+				gapStart = buffer.gapStart;
+			}
+			else
+			{
+				this.array = enumerable.ToArray();
+			}
+		}
 
 		#endregion Constructors
 
-        #region Helpers
+		#region Helpers
 
-        public GapBuffer<T> Clone()
-        {
-            return new GapBuffer<T>(this.array.AsSpan());
-        }
+		public GapBuffer<T> Clone()
+		{
+			return new GapBuffer<T>(this.array.AsSpan());
+		}
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ThrowIfOutOfRange(int index)
-        {
-            if (index < 0 || index >= Count)
-                throw new ArgumentOutOfRangeException(nameof(index));
-        }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private void ThrowIfOutOfRange(int index)
+		{
+			if (index < 0 || index >= Count)
+				throw new ArgumentOutOfRangeException(nameof(index));
+		}
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ThrowIfOutOfRange(int index, int count,
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private void ThrowIfOutOfRange(int index, int count,
 
-            [CallerArgumentExpression(nameof(index))] string? indexParamName = null,
-            [CallerArgumentExpression(nameof(count))] string? countParamName = null)
-        {
-            if (index < 0 || index >= Count)
-                throw new ArgumentOutOfRangeException(nameof(indexParamName));
+			[CallerArgumentExpression(nameof(index))] string? indexParamName = null,
+			[CallerArgumentExpression(nameof(count))] string? countParamName = null)
+		{
+			if (index < 0 || index >= Count)
+				throw new ArgumentOutOfRangeException(nameof(indexParamName));
 
-            if (count < 0 || index + count >= Count)
-                throw new ArgumentOutOfRangeException(nameof(countParamName));
-        }
+			if (count < 0 || index + count >= Count)
+				throw new ArgumentOutOfRangeException(nameof(countParamName));
+		}
 
-        /// <summary>
-        /// Sets the <see cref="Capacity"/> to the actual number of elements in the <see cref="GapBuffer{T}"/>, 
-        /// if that number is less than a threshold value. 
-        /// </summary>
-        public void TrimExcess()
-        {
-            int size = Count;
-            int threshold = (int)(array.Length * 0.9);
-            if (size < threshold)
-            {
-                Capacity = size;
-            }
-        }
+		/// <summary>
+		/// Sets the <see cref="Capacity"/> to the actual number of elements in the <see cref="GapBuffer{T}"/>, 
+		/// if that number is less than a threshold value. 
+		/// </summary>
+		public void TrimExcess()
+		{
+			int size = Count;
+			int threshold = (int)(array.Length * 0.9);
+			if (size < threshold)
+			{
+				Capacity = size;
+			}
+		}
 
-        // Moves the gap start to the given index
-        private void PlaceGapStart(int index)
-        {
-            // Are we already there?
-            if (index == gapStart)
-                return;
+		// Moves the gap start to the given index
+		private void PlaceGapStart(int index)
+		{
+			// Are we already there?
+			if (index == gapStart)
+				return;
 
-            // Is there even a gap?
-            if (GapCount == 0)
-            {
-                gapStart = gapEnd = index;
-                return;
-            }
+			// Is there even a gap?
+			if (GapCount == 0)
+			{
+				gapStart = gapEnd = index;
+				return;
+			}
 
-            // Which direction do we move the gap?
-            if (index < gapStart)
-            {
-                // Move the gap near (by copying the items at the beginning of the gap to the end)
-                int count = gapStart - index;
-                int deltaCount = GapCount < count ? GapCount : count;
-                Array.Copy(array, index, array, gapEnd - count, count);
-                gapStart -= count;
-                gapEnd -= count;
+			// Which direction do we move the gap?
+			if (index < gapStart)
+			{
+				// Move the gap near (by copying the items at the beginning of the gap to the end)
+				int count = gapStart - index;
+				int deltaCount = GapCount < count ? GapCount : count;
+				Array.Copy(array, index, array, gapEnd - count, count);
+				gapStart -= count;
+				gapEnd -= count;
 
-                // Clear the contents of the gap
-                Array.Clear(array, index, deltaCount);
-            }
-            else
-            {
-                // Move the gap far (by copying the items at the end of the gap to the beginning)
-                int count = index - gapStart;
-                int deltaIndex = index > gapEnd ? index : gapEnd;
-                Array.Copy(array, gapEnd, array, gapStart, count);
-                gapStart += count;
-                gapEnd += count;
+				// Clear the contents of the gap
+				Array.Clear(array, index, deltaCount);
+			}
+			else
+			{
+				// Move the gap far (by copying the items at the end of the gap to the beginning)
+				int count = index - gapStart;
+				int deltaIndex = index > gapEnd ? index : gapEnd;
+				Array.Copy(array, gapEnd, array, gapStart, count);
+				gapStart += count;
+				gapEnd += count;
 
-                // Clear the contents of the gap
-                Array.Clear(array, deltaIndex, gapEnd - deltaIndex);
-            }
-        }
+				// Clear the contents of the gap
+				Array.Clear(array, deltaIndex, gapEnd - deltaIndex);
+			}
+		}
 
-        /// <summary>
-        /// Ensures that the <see cref="gapStart"/> == <paramref name="index"/> and the <see cref="GapCount"/> >= <paramref name="count"/>
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="count"></param>
-        private void EnsureGap(int index, int count)
-        {
-            PlaceGapStart(index);
-            EnsureGapCapacity(count);
-        }
+		/// <summary>
+		/// Ensures that the <see cref="gapStart"/> == <paramref name="index"/> and the <see cref="GapCount"/> >= <paramref name="count"/>
+		/// </summary>
+		/// <param name="index"></param>
+		/// <param name="count"></param>
+		private void EnsureGap(int index, int count)
+		{
+			PlaceGapStart(index);
+			EnsureGapCapacity(count);
+		}
 
-        // Expands the interal array if the required size isn't available
-        private void EnsureGapCapacity(int required)
-        {
-            // Is the available space in the gap?
-            if (required > GapCount)
-            {
-                Capacity = Math.Max(Count + required, DefaultCapacity);
-            }
-        }
+		// Expands the interal array if the required size isn't available
+		private void EnsureGapCapacity(int required)
+		{
+			// Is the available space in the gap?
+			if (required > GapCount)
+			{
+				Capacity = Math.Max(Count + required, DefaultCapacity);
+			}
+		}
 
-        private void ClearGap()
-        {
-            if (GapCount > 0)
-            {
-                int gapCount = GapCount;
+		private void ClearGap()
+		{
+			if (GapCount > 0)
+			{
+				int gapCount = GapCount;
 
-                Array.Copy(array, gapEnd, array, gapStart, GapCount);
+				Array.Copy(array, gapEnd, array, gapStart, GapCount);
 
-                gapStart = Count + gapCount;
-                gapEnd = gapCount;
-            }
-        }
+				gapStart = Count + gapCount;
+				gapEnd = gapCount;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Buffer
+		#region Buffer
 
-        #region IReadOnlyBuffer
+		#region IReadOnlyBuffer
 
 		#region IReadOnlyList
 
@@ -374,77 +374,77 @@ namespace TextEdit.Collections
 
 		#endregion
 
-        public override bool IsReadOnly => false;
+		public override bool IsReadOnly => false;
 
 		public override int IndexOf(ReadOnlySpan<T> value, int startIndex)
-        {
-            return array.AsSpan(startIndex).IndexOf(value) + startIndex;
+		{
+			return array.AsSpan(startIndex).IndexOf(value) + startIndex;
 		}
 
-        public override int LastIndexOf(ReadOnlySpan<T> value, int startIndex)
-        {
+		public override int LastIndexOf(ReadOnlySpan<T> value, int startIndex)
+		{
 #pragma warning disable CS8631
-            return array.AsSpan(0, startIndex).LastIndexOf(value) + startIndex;
+			return array.AsSpan(0, startIndex).LastIndexOf(value) + startIndex;
 #pragma warning restore CS8631
 		}
 
-        public override int IndexOfAny(T value0, T value1, int startIndex)
-        {
-            // The ReadOnlySpan.IndexOfAny method thinks that the startIndex is 0
-            return array.AsSpan(startIndex).IndexOfAny(value0, value1) + startIndex;
+		public override int IndexOfAny(T value0, T value1, int startIndex)
+		{
+			// The ReadOnlySpan.IndexOfAny method thinks that the startIndex is 0
+			return array.AsSpan(startIndex).IndexOfAny(value0, value1) + startIndex;
 		}
 
-        public override int IndexOfAny(T value0, T value1, T value2, int startIndex)
-        {
-            return array.AsSpan(startIndex).IndexOfAny(value0, value1, value2) + startIndex;
+		public override int IndexOfAny(T value0, T value1, T value2, int startIndex)
+		{
+			return array.AsSpan(startIndex).IndexOfAny(value0, value1, value2) + startIndex;
 		}
 
-        public override int IndexOfAny(IEnumerable<T> items, int startIndex)
-        {
-            // TODO: Optimize
-            return array.AsSpan(startIndex).IndexOfAny(items.ToArray().AsSpan()) + startIndex;
+		public override int IndexOfAny(IEnumerable<T> items, int startIndex)
+		{
+			// TODO: Optimize
+			return array.AsSpan(startIndex).IndexOfAny(items.ToArray().AsSpan()) + startIndex;
 		}
 
-        public override int IndexOfAny(ReadOnlySpan<T> items, int startIndex)
-        {
-            return array.AsSpan(startIndex).IndexOfAny(items) + startIndex;
+		public override int IndexOfAny(ReadOnlySpan<T> items, int startIndex)
+		{
+			return array.AsSpan(startIndex).IndexOfAny(items) + startIndex;
 		}
 
-        public override int LastIndexOfAny(T value0, T value1, int startIndex)
-        {
-            return array.AsSpan(0, startIndex).LastIndexOfAny(value0, value1) + startIndex;
+		public override int LastIndexOfAny(T value0, T value1, int startIndex)
+		{
+			return array.AsSpan(0, startIndex).LastIndexOfAny(value0, value1) + startIndex;
 		}
 
-        public override int LastIndexOfAny(T value0, T value1, T value2, int startIndex)
-        {
-            return array.AsSpan(0, startIndex).LastIndexOfAny(value0, value1, value2) + startIndex;
+		public override int LastIndexOfAny(T value0, T value1, T value2, int startIndex)
+		{
+			return array.AsSpan(0, startIndex).LastIndexOfAny(value0, value1, value2) + startIndex;
 		}
 
-        public override int LastIndexOfAny(IEnumerable<T> items, int startIndex)
-        {
-            // TODO: Optimize
-            return array.AsSpan(0, startIndex).LastIndexOfAny(items.ToArray().AsSpan()) + startIndex;
+		public override int LastIndexOfAny(IEnumerable<T> items, int startIndex)
+		{
+			// TODO: Optimize
+			return array.AsSpan(0, startIndex).LastIndexOfAny(items.ToArray().AsSpan()) + startIndex;
 		}
 
-        public override int LastIndexOfAny(ReadOnlySpan<T> items, int startIndex)
-        {
-            return array.AsSpan(0, startIndex).LastIndexOfAny(items) + startIndex;
+		public override int LastIndexOfAny(ReadOnlySpan<T> items, int startIndex)
+		{
+			return array.AsSpan(0, startIndex).LastIndexOfAny(items) + startIndex;
 		}
 
-        public override ReadOnlySpan<T> AsSpan(int start, int count)
-        {
-            return AsMemory(start, count).Span;
-        }
+		public override ReadOnlySpan<T> AsSpan(int start, int count)
+		{
+			return AsMemory(start, count).Span;
+		}
 
-        public override ReadOnlyMemory<T> AsMemory(int start, int count)
-        {
-            if (NeedValidation(start, count))
-            {
-                return array.AsMemory(start, count);
-            }
+		public override ReadOnlyMemory<T> AsMemory(int start, int count)
+		{
+			if (NeedValidation(start, count))
+			{
+				return array.AsMemory(start, count);
+			}
 
-            return this.ToArray(start, count).AsMemory(0, count);
-        }
+			return this.ToArray(start, count).AsMemory(0, count);
+		}
 
 		#endregion
 
@@ -517,221 +517,221 @@ namespace TextEdit.Collections
 		#endregion
 
 		public override T this[int index]
-        {
-            get
-            {
-                ThrowIfOutOfRange(index);
+		{
+			get
+			{
+				ThrowIfOutOfRange(index);
 
-                // Find the correct span and get the item
-                if (index >= gapStart)
-                    index += GapCount;
+				// Find the correct span and get the item
+				if (index >= gapStart)
+					index += GapCount;
 
-                return array[index];
-            }
+				return array[index];
+			}
 
-            set
-            {
-                ThrowIfOutOfRange(index);
+			set
+			{
+				ThrowIfOutOfRange(index);
 
-                // Find the correct span and set the item
-                if (index >= gapStart)
-                    index += GapCount;
+				// Find the correct span and set the item
+				if (index >= gapStart)
+					index += GapCount;
 
-                array[index] = value;
-                version++;
-            }
-        }
+				array[index] = value;
+				version++;
+			}
+		}
 
-        /// <summary>
-        /// Searches for the specified object and returns the zero-based index of the first 
-        /// occurrence within the <see cref="GapBuffer{T}"/>.
-        /// </summary>
-        /// <param name="item">The object to locate in the <see cref="GapBuffer{T}"/>. The value 
-        /// can be null for reference types.</param>
-        /// <returns>The zero-based index of the first occurrence of <paramref name="item"/> within 
-        /// the <see cref="GapBuffer{T}"/>, if found; otherwise, �1.</returns>
-        public override int IndexOf(T item, int start)
-        {
-            int index = Array.IndexOf(array, item, start, gapStart);
+		/// <summary>
+		/// Searches for the specified object and returns the zero-based index of the first 
+		/// occurrence within the <see cref="GapBuffer{T}"/>.
+		/// </summary>
+		/// <param name="item">The object to locate in the <see cref="GapBuffer{T}"/>. The value 
+		/// can be null for reference types.</param>
+		/// <returns>The zero-based index of the first occurrence of <paramref name="item"/> within 
+		/// the <see cref="GapBuffer{T}"/>, if found; otherwise, �1.</returns>
+		public override int IndexOf(T item, int start)
+		{
+			int index = Array.IndexOf(array, item, start, gapStart);
 
-            if (index < 0)
-            {
-                index = Array.IndexOf(array, item, gapEnd, array.Length - gapEnd);
+			if (index < 0)
+			{
+				index = Array.IndexOf(array, item, gapEnd, array.Length - gapEnd);
 
-                // Translate the internal index to the index in the collection
-                if (index != -1)
-                    return index - GapCount;
-            }
+				// Translate the internal index to the index in the collection
+				if (index != -1)
+					return index - GapCount;
+			}
 
-            return index;
-        }
+			return index;
+		}
 
-        public override int LastIndexOf(T item, int start)
-        {
-            int index = Array.LastIndexOf(array, item, start - 1, start - gapStart);
+		public override int LastIndexOf(T item, int start)
+		{
+			int index = Array.LastIndexOf(array, item, start - 1, start - gapStart);
 
-            if (index < 0)
-            {
-                index = Array.LastIndexOf(array, item, gapStart, gapStart);
+			if (index < 0)
+			{
+				index = Array.LastIndexOf(array, item, gapStart, gapStart);
 
-                // Translate the internal index to the index in the collection
-                if (index != -1)
-                    return index - GapCount;
-            }
+				// Translate the internal index to the index in the collection
+				if (index != -1)
+					return index - GapCount;
+			}
 
-            return index;
-        }
+			return index;
+		}
 
-        /// <summary>
-        /// Inserts an element into the <see cref="GapBuffer{T}"/> at the specified index. Consecutive operations
-        /// at or near previous inserts are optimized.
-        /// </summary>
-        /// <param name="index">The object to insert. The value can be null for reference types.</param>
-        /// <param name="item">The zero-based index at which <paramref name="item"/> should be inserted.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="index"/> is less than 0.
-        /// <para>-or-</para>
-        /// <paramref name="index"/> is greater than <see cref="Count"/>.
-        /// </exception>
-        public override void Insert(int index, T item)
-        {
-            if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException(nameof(index));
+		/// <summary>
+		/// Inserts an element into the <see cref="GapBuffer{T}"/> at the specified index. Consecutive operations
+		/// at or near previous inserts are optimized.
+		/// </summary>
+		/// <param name="index">The object to insert. The value can be null for reference types.</param>
+		/// <param name="item">The zero-based index at which <paramref name="item"/> should be inserted.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is less than 0.
+		/// <para>-or-</para>
+		/// <paramref name="index"/> is greater than <see cref="Count"/>.
+		/// </exception>
+		public override void Insert(int index, T item)
+		{
+			if (index < 0 || index > Count)
+				throw new ArgumentOutOfRangeException(nameof(index));
 
-            // Prepare the buffer
-            EnsureGap(index, 1);
+			// Prepare the buffer
+			EnsureGap(index, 1);
 
-            array[index] = item;
-            gapStart++;
-            version++;
-        }
+			array[index] = item;
+			gapStart++;
+			version++;
+		}
 
-        /// <summary>
-        /// Removes the element at the specified index of the <see cref="GapBuffer{T}"/>. 
-        /// </summary>
-        /// <param name="index">The zero-based index of the element to remove.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="index"/> is less than 0.
-        /// <para>-or-</para>
-        /// <paramref name="index"/> is equal to or greater than <see cref="Count"/>.
-        /// </exception>
-        public override void RemoveAt(int index)
-        {
-            ThrowIfOutOfRange(index);
+		/// <summary>
+		/// Removes the element at the specified index of the <see cref="GapBuffer{T}"/>. 
+		/// </summary>
+		/// <param name="index">The zero-based index of the element to remove.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is less than 0.
+		/// <para>-or-</para>
+		/// <paramref name="index"/> is equal to or greater than <see cref="Count"/>.
+		/// </exception>
+		public override void RemoveAt(int index)
+		{
+			ThrowIfOutOfRange(index);
 
-            // This is just an optimization
-            // The code in else block does the same thing
-            if (index == gapStart - 1)
-            {
-                gapStart = index; // gapStart--;
-                array[index] = default!;
-            }
-            else
-            {
-                // Place the gap at the index and increase the gap size by 1
-                PlaceGapStart(index);
-                array[gapEnd] = default!;
-                gapEnd++;
-            }
+			// This is just an optimization
+			// The code in else block does the same thing
+			if (index == gapStart - 1)
+			{
+				gapStart = index; // gapStart--;
+				array[index] = default!;
+			}
+			else
+			{
+				// Place the gap at the index and increase the gap size by 1
+				PlaceGapStart(index);
+				array[gapEnd] = default!;
+				gapEnd++;
+			}
 
-            version++;
-        }
+			version++;
+		}
 
-        /// <summary>
-        /// Inserts the elements of a collection into the <see cref="GapBuffer{T}"/> at the specified index. 
-        /// Consecutive operations at or near previous inserts are optimized.
-        /// </summary>
-        /// <param name="index">The zero-based index at which the new elements should be inserted.</param>
-        /// <param name="collection">The collection whose elements should be inserted into the <see cref="GapBuffer{T}"/>. 
-        /// The collection itself cannot be null, but it can contain elements that are null, if 
-        /// type <typeparamref name="T"/> is a reference type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="collection"/> is a null reference.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="index"/> is less than 0.
-        /// <para>-or-</para>
-        /// <paramref name="index"/> is greater than <see cref="Count"/>.
-        /// </exception>
-        public override void InsertRange(int index, IEnumerable<T> collection)
-        {
-            ThrowHelper.ThrowIfNull(collection);
-            ThrowIfOutOfRange(index);
+		/// <summary>
+		/// Inserts the elements of a collection into the <see cref="GapBuffer{T}"/> at the specified index. 
+		/// Consecutive operations at or near previous inserts are optimized.
+		/// </summary>
+		/// <param name="index">The zero-based index at which the new elements should be inserted.</param>
+		/// <param name="collection">The collection whose elements should be inserted into the <see cref="GapBuffer{T}"/>. 
+		/// The collection itself cannot be null, but it can contain elements that are null, if 
+		/// type <typeparamref name="T"/> is a reference type.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="collection"/> is a null reference.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is less than 0.
+		/// <para>-or-</para>
+		/// <paramref name="index"/> is greater than <see cref="Count"/>.
+		/// </exception>
+		public override void InsertRange(int index, IEnumerable<T> collection)
+		{
+			ThrowHelper.ThrowIfNull(collection);
+			ThrowIfOutOfRange(index);
 
-            if (collection is ICollection<T> col)
-            {
-                int count = col.Count;
-                if (count > 0)
-                {
-                    EnsureGap(index, count);
+			if (collection is ICollection<T> col)
+			{
+				int count = col.Count;
+				if (count > 0)
+				{
+					EnsureGap(index, count);
 
-                    // Copy the collection directly into the buffer
-                    col.CopyTo(array, gapStart);
-                    gapStart += count;
-                }
-            }
-            else
-            {
-                // Add the items to the buffer one-at-a-time :(
-                using (IEnumerator<T> enumerator = collection.GetEnumerator())
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        Insert(index, enumerator.Current);
-                        index++;
-                    }
-                }
-            }
+					// Copy the collection directly into the buffer
+					col.CopyTo(array, gapStart);
+					gapStart += count;
+				}
+			}
+			else
+			{
+				// Add the items to the buffer one-at-a-time :(
+				using (IEnumerator<T> enumerator = collection.GetEnumerator())
+				{
+					while (enumerator.MoveNext())
+					{
+						Insert(index, enumerator.Current);
+						index++;
+					}
+				}
+			}
 
-            version++;
-        }
+			version++;
+		}
 
-        /// <summary>
-        /// Removes a range of elements from the <see cref="GapBuffer{T}"/>.
-        /// </summary>
-        /// <param name="index">The zero-based starting index of the range of elements to remove.</param>
-        /// <param name="count">The number of elements to remove.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="index"/> is less than 0 or is equal to or greater than <see cref="Count"/>.
-        /// <para>-or-</para>
-        /// <paramref name="count"/> is less than 0.
-        /// <para>-or-</para>
-        /// <paramref name="index"/> and <paramref name="count"/> do not denote a valid range of elements in  
-        /// the <see cref="GapBuffer{T}"/>. 
-        /// </exception>
-        public override void RemoveRange(int index, int count)
-        {
-            ThrowIfOutOfRange(index, count);
+		/// <summary>
+		/// Removes a range of elements from the <see cref="GapBuffer{T}"/>.
+		/// </summary>
+		/// <param name="index">The zero-based starting index of the range of elements to remove.</param>
+		/// <param name="count">The number of elements to remove.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is less than 0 or is equal to or greater than <see cref="Count"/>.
+		/// <para>-or-</para>
+		/// <paramref name="count"/> is less than 0.
+		/// <para>-or-</para>
+		/// <paramref name="index"/> and <paramref name="count"/> do not denote a valid range of elements in  
+		/// the <see cref="GapBuffer{T}"/>. 
+		/// </exception>
+		public override void RemoveRange(int index, int count)
+		{
+			ThrowIfOutOfRange(index, count);
 
-            // Move the gap over the index and increase the gap size
-            // by the number of elements removed. Easy as pie!
+			// Move the gap over the index and increase the gap size
+			// by the number of elements removed. Easy as pie!
 
-            if (count > 0)
-            {
-                PlaceGapStart(index);
-                Array.Clear(array, gapEnd, count);
-                gapEnd += count;
-                version++;
-            }
-        }
+			if (count > 0)
+			{
+				PlaceGapStart(index);
+				Array.Clear(array, gapEnd, count);
+				gapEnd += count;
+				version++;
+			}
+		}
 
-        public override void InsertSpan(int index, ReadOnlySpan<T> source)
-        {
-            int count = source.Length;
+		public override void InsertSpan(int index, ReadOnlySpan<T> source)
+		{
+			int count = source.Length;
 
-            if (count > 0)
-            {
-                EnsureGap(index, count);
+			if (count > 0)
+			{
+				EnsureGap(index, count);
 
-                // Get reference to the gap
-                Span<T> gapSpan = array.AsSpan(gapStart, GapCount);
+				// Get reference to the gap
+				Span<T> gapSpan = array.AsSpan(gapStart, GapCount);
 
-                // Copy elements to the gap span
-                source.CopyTo(gapSpan);
+				// Copy elements to the gap span
+				source.CopyTo(gapSpan);
 
-                gapStart += count;
-            }
-        }
+				gapStart += count;
+			}
+		}
 
-        #endregion
+		#endregion
 
 		#endregion
 

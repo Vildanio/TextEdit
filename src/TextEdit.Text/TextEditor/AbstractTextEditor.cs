@@ -74,7 +74,7 @@ namespace TextEdit.Text
 			this.textRenderer = textRenderer;
 			this.hotKeyManager = new InputHotKeyManager(this, BasicHotkeyBindings);
 			this.undoManager = new TextDocumentChangeManager(textRenderer.TextDocument);
-			
+
 			VisualChildren.Add(textRenderer);
 		}
 

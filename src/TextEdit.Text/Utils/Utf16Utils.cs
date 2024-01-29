@@ -19,7 +19,7 @@
 					return 2;
 				}
 			}
-			else if(char.IsHighSurrogate(character) && index > 0)
+			else if (char.IsHighSurrogate(character) && index > 0)
 			{
 				if (char.IsLowSurrogate(chars[index - 1]))
 				{

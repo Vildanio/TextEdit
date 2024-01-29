@@ -7,20 +7,20 @@ namespace TextEdit.Collections
 	/// <see cref="Buffer{T}"/> implemented through <see cref="StringBuilder"/>
 	/// </summary>
 	public class StringBuilderBuffer : Buffer<char>, IEquatable<StringBuilderBuffer>
-    {
-        private readonly StringBuilder builder;
+	{
+		private readonly StringBuilder builder;
 
 		#region Static
 
-        /// <summary>
-        /// Creates <see cref="StringBuilderBuffer"/> and sets the given <paramref name="builder"/> as internal buffer without copy.
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public static StringBuilderBuffer CreateUnsafe(StringBuilder builder)
-        {
-            return new StringBuilderBuffer(builder);
-        }
+		/// <summary>
+		/// Creates <see cref="StringBuilderBuffer"/> and sets the given <paramref name="builder"/> as internal buffer without copy.
+		/// </summary>
+		/// <param name="builder"></param>
+		/// <returns></returns>
+		public static StringBuilderBuffer CreateUnsafe(StringBuilder builder)
+		{
+			return new StringBuilderBuffer(builder);
+		}
 
 		#endregion
 
@@ -30,35 +30,35 @@ namespace TextEdit.Collections
 		/// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
 		/// </summary>
 		public StringBuilderBuffer()
-            : this(new StringBuilder())
-        {
+			: this(new StringBuilder())
+		{
 
-        }
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
-        /// </summary>
-        /// <param name="text"></param>
-        public StringBuilderBuffer(string text)
-            : this(new StringBuilder(text))
-        {
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
+		/// </summary>
+		/// <param name="text"></param>
+		public StringBuilderBuffer(string text)
+			: this(new StringBuilder(text))
+		{
 
-        }
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
-        /// </summary>
-        /// <param name="builder"></param>
-        private StringBuilderBuffer(StringBuilder builder)
-        {
-            this.builder = builder;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StringBuilderBuffer"/> class
+		/// </summary>
+		/// <param name="builder"></param>
+		private StringBuilderBuffer(StringBuilder builder)
+		{
+			this.builder = builder;
+		}
 
-        #endregion
+		#endregion
 
-        #region Buffer
+		#region Buffer
 
-        #region IReadOnlyBuffer
+		#region IReadOnlyBuffer
 
 		#region IReadOnlyList
 
@@ -76,62 +76,62 @@ namespace TextEdit.Collections
 
 		public override int Count => builder.Length;
 
-        public override char this[int index]
-        {
-            get
-            {
-                return builder[index];
-            }
+		public override char this[int index]
+		{
+			get
+			{
+				return builder[index];
+			}
 
-            set
-            {
-                builder[index] = value;
-            }
-        }
+			set
+			{
+				builder[index] = value;
+			}
+		}
 
 		#endregion
 
 		public override bool IsReadOnly => false;
 
 		public override ReadOnlyMemory<char> AsMemory(int start, int count)
-        {
-            return builder.ToString(start, count).AsMemory();
-        }
+		{
+			return builder.ToString(start, count).AsMemory();
+		}
 
-        public override ReadOnlySpan<char> AsSpan(int start, int count)
-        {
-            return builder.ToString(start, count).AsSpan();
-        }
+		public override ReadOnlySpan<char> AsSpan(int start, int count)
+		{
+			return builder.ToString(start, count).AsSpan();
+		}
 
-        public override void CopyTo(int index, int count, Span<char> span)
-        {
-            builder.CopyTo(index, span, count);
-        }
+		public override void CopyTo(int index, int count, Span<char> span)
+		{
+			builder.CopyTo(index, span, count);
+		}
 
-        public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
-        {
-            builder.CopyTo(sourceIndex, destination, destinationIndex, count);
-        }
+		public override void CopyTo(int sourceIndex, char[] destination, int destinationIndex, int count)
+		{
+			builder.CopyTo(sourceIndex, destination, destinationIndex, count);
+		}
 
-        public override int IndexOf(char value, int startIndex)
-        {
-            return builder.IndexOf(value, startIndex);
-        }
+		public override int IndexOf(char value, int startIndex)
+		{
+			return builder.IndexOf(value, startIndex);
+		}
 
-        public override int IndexOf(ReadOnlySpan<char> value, int startIndex)
-        {
-            return builder.IndexOf(value, startIndex);
-        }
+		public override int IndexOf(ReadOnlySpan<char> value, int startIndex)
+		{
+			return builder.IndexOf(value, startIndex);
+		}
 
-        public override int LastIndexOf(char value, int startIndex)
-        {
-            return builder.LastIndexOf(value, startIndex);
-        }
+		public override int LastIndexOf(char value, int startIndex)
+		{
+			return builder.LastIndexOf(value, startIndex);
+		}
 
-        public override int LastIndexOf(ReadOnlySpan<char> value, int startIndex)
-        {
-            return builder.LastIndexOf(value, startIndex);
-        }
+		public override int LastIndexOf(ReadOnlySpan<char> value, int startIndex)
+		{
+			return builder.LastIndexOf(value, startIndex);
+		}
 
 		public override int IndexOfAny(char value0, char value1, int startIndex)
 		{
@@ -176,14 +176,14 @@ namespace TextEdit.Collections
 		#endregion
 
 		public override void RemoveAt(int index)
-        {
-            builder.Remove(index, 1);
-        }
+		{
+			builder.Remove(index, 1);
+		}
 
 		public override void RemoveRange(int index, int count)
-        {
-            builder.Remove(index, count);
-        }
+		{
+			builder.Remove(index, count);
+		}
 
 		public override void Insert(int index, char item)
 		{
@@ -205,9 +205,9 @@ namespace TextEdit.Collections
 		#region StringBuilder
 
 		public string ToString(int start, int count)
-        {
-            return builder.ToString(start, count);
-        }
+		{
+			return builder.ToString(start, count);
+		}
 
 		#endregion
 
@@ -215,7 +215,7 @@ namespace TextEdit.Collections
 
 		public bool Equals(StringBuilderBuffer? other)
 		{
-            return other is not null && other.builder == this.builder;
+			return other is not null && other.builder == this.builder;
 		}
 
 		public override bool Equals(object? obj)

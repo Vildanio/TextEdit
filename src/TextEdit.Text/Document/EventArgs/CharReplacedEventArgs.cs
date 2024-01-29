@@ -1,7 +1,7 @@
 ﻿namespace TextEdit.Text
 {
 	public class CharReplacedEventArgs : ICharReplacedEventArgs
-    {
+	{
 		public int Index { get; }
 
 		public char OldChar { get; }

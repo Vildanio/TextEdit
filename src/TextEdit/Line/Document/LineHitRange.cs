@@ -42,7 +42,7 @@
 		{
 			return Start <= position && End >= position;
 		}
-		
+
 		/// <summary>
 		/// Gets <see cref="LineHitRange"/> which <see cref="Start"/> is less than <see cref="End"/>
 		/// </summary>

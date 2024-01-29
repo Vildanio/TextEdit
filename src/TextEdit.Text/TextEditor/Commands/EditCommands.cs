@@ -73,7 +73,7 @@ namespace TextEdit.Text
 						textDocument.RemoveRange(newCaretPosition, newCaretPosition - caretIndex);
 					}
 				}
-				
+
 				// ### NEEDS_TEST
 				// Maybe moving should be performed before removing
 				selection.WordLeft();

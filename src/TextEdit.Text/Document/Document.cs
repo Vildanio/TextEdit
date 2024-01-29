@@ -3,13 +3,13 @@
 namespace TextEdit.Text
 {
 	public class Document : ITextDocument, IText
-    {
-        #region Static
+	{
+		#region Static
 
-        public static Document GapDocument()
-        {
-            return CreateUnsafe(new GapText());
-        }
+		public static Document GapDocument()
+		{
+			return CreateUnsafe(new GapText());
+		}
 
 		public static Document GapDocument(string text)
 		{
@@ -22,30 +22,30 @@ namespace TextEdit.Text
 		}
 
 		public static Document StringBuilderDocument(string text)
-        {
-            return CreateUnsafe(new StringBuilderText(text));
-        }
+		{
+			return CreateUnsafe(new StringBuilderText(text));
+		}
 
 		public static Document CreateUnsafe(IText text)
 		{
 			return new Document(text, default);
 		}
 
-        #endregion
+		#endregion
 
-        private readonly IText text;
+		private readonly IText text;
 
-        #region Constructor
+		#region Constructor
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Document"/> class
-        /// </summary>
-        /// <param name="text"></param>
-        public Document(IText text)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Document"/> class
+		/// </summary>
+		/// <param name="text"></param>
+		public Document(IText text)
 			: this(text.Clone(), default)
-        {
+		{
 
-        }
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Document"/> class
@@ -67,29 +67,29 @@ namespace TextEdit.Text
 		#region IReadOnlyList
 
 		public char this[int index]
-        {
-            get
-            {
-                return text[index];
-            }
-            set
-            {
-                if (!IsReadOnly && CharReplaced is not null)
-                {
-                    char oldChar = this[index];
+		{
+			get
+			{
+				return text[index];
+			}
+			set
+			{
+				if (!IsReadOnly && CharReplaced is not null)
+				{
+					char oldChar = this[index];
 
-                    text[index] = value;
+					text[index] = value;
 
-                    CharReplaced.Invoke(this, new CharReplacedEventArgs(index, oldChar, value));
-                }
-                else
-                {
-                    text[index] = value;
-                }
-            }
-        }
+					CharReplaced.Invoke(this, new CharReplacedEventArgs(index, oldChar, value));
+				}
+				else
+				{
+					text[index] = value;
+				}
+			}
+		}
 
-        public int Count => text.Count;
+		public int Count => text.Count;
 
 		#region IEnumerable
 
@@ -220,88 +220,88 @@ namespace TextEdit.Text
 
 		public bool IsReadOnly => text.IsReadOnly;
 
-        public void Add(char item)
-        {
-            Insert(Count, item);
-        }
+		public void Add(char item)
+		{
+			Insert(Count, item);
+		}
 
-        public bool Remove(char item)
-        {
-            int index = IndexOf(item);
+		public bool Remove(char item)
+		{
+			int index = IndexOf(item);
 
-            if (index >= 0)
-            {
-                RemoveAt(index);
+			if (index >= 0)
+			{
+				RemoveAt(index);
 
-                return true;
-            }
+				return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        public void Clear()
-        {
-            if (!IsReadOnly && CharRangeRemoved is not null)
-            {
-                // Objects in event args should me immutable
-                string chars = this.ToString();
+		public void Clear()
+		{
+			if (!IsReadOnly && CharRangeRemoved is not null)
+			{
+				// Objects in event args should me immutable
+				string chars = this.ToString();
 
-                text.Clear();
+				text.Clear();
 
-                CharRangeRemoved.Invoke(this, new CharRangeRemovedEventArgs(0, chars));
-            }
-            else
-            {
-                text.Clear();
-            }
-        }
+				CharRangeRemoved.Invoke(this, new CharRangeRemovedEventArgs(0, chars));
+			}
+			else
+			{
+				text.Clear();
+			}
+		}
 
 		#endregion
 
 		public void Insert(int index, char item)
-        {
-            text.Insert(index, item);
+		{
+			text.Insert(index, item);
 
-            if (!IsReadOnly)
-            {
-                CharInserted?.Invoke(this, new CharInsertedEventArgs(index, item));
-            }
-        }
+			if (!IsReadOnly)
+			{
+				CharInserted?.Invoke(this, new CharInsertedEventArgs(index, item));
+			}
+		}
 
-        public void RemoveAt(int index)
-        {
-            if (!IsReadOnly && CharRemoved is not null)
-            {
-                char character = this[index];
+		public void RemoveAt(int index)
+		{
+			if (!IsReadOnly && CharRemoved is not null)
+			{
+				char character = this[index];
 
-                text.RemoveAt(index);
+				text.RemoveAt(index);
 
-                CharRemoved.Invoke(this, new CharRemovedEventArgs(index, character));
-            }
-            else
-            {
-                text.RemoveAt(index);
-            }
-        }
+				CharRemoved.Invoke(this, new CharRemovedEventArgs(index, character));
+			}
+			else
+			{
+				text.RemoveAt(index);
+			}
+		}
 
 		#endregion
 
 		public void RemoveRange(int index, int count)
-        {
-            if (!IsReadOnly && CharRangeRemoved is not null)
-            {
-                // Objects in event args should me immutable
-                string chars = AsString(index, count);
+		{
+			if (!IsReadOnly && CharRangeRemoved is not null)
+			{
+				// Objects in event args should me immutable
+				string chars = AsString(index, count);
 
-                text.RemoveRange(index, count);
+				text.RemoveRange(index, count);
 
-                CharRangeRemoved.Invoke(this, new CharRangeRemovedEventArgs(index, chars));
-            }
-            else
-            {
-                text.RemoveRange(index, count);
-            }
-        }
+				CharRangeRemoved.Invoke(this, new CharRangeRemovedEventArgs(index, chars));
+			}
+			else
+			{
+				text.RemoveRange(index, count);
+			}
+		}
 
 		public void InsertRange(int index, IEnumerable<char> enumerable)
 		{

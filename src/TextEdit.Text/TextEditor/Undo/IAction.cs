@@ -1,9 +1,9 @@
 ﻿namespace TextEdit.Text
 {
-    public interface IAction
-    {
-        public void Undo();
+	public interface IAction
+	{
+		public void Undo();
 
-        public void Redo();
-    }
+		public void Redo();
+	}
 }
