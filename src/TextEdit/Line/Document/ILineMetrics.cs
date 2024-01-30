@@ -75,13 +75,13 @@
 		/// </summary>
 		/// <param name="offset"></param>
 		/// <returns></returns>
-		public LinePosition GetLinePositionByOffset(int offset);
+		public LinePosition GetLinePositionFromOffset(int offset);
 
 		/// <summary>
 		/// Gets offset from <see cref="LinePosition"/>
 		/// </summary>
 		/// <param name="position"></param>
 		/// <returns></returns>
-		public int GetOffsetByPosition(LinePosition position);
+		public int GetOffsetFromPosition(LinePosition position);
 	}
 }

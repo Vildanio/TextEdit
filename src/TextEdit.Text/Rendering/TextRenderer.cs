@@ -1,21 +1,24 @@
 ﻿using Avalonia.Input;
 using TextEdit.Line;
 
-namespace TextEdit.Text.Rendering
+namespace TextEdit.Text
 {
 	public abstract class AbstractTextRenderer : InputElement
 	{
 		private readonly AbstractLineRenderer lineRenderer;
 		private readonly LineSelectionManagerAdapter selectionManager;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		protected AbstractTextRenderer(AbstractLineRenderer lineRenderer, ITextDocument textDocument)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		{
 			this.lineRenderer = lineRenderer;
-			this.textDocument = textDocument;
+			this.TextDocument = textDocument;
 			this.selectionManager = new LineSelectionManagerAdapter(LineMetrics, lineRenderer.SelectionManager);
 		}
 
 		private ITextDocument textDocument;
+		private TextDocumentMetrics lineMetrics;
 
 		public ITextDocument TextDocument
 		{
@@ -26,14 +29,13 @@ namespace TextEdit.Text.Rendering
 				{
 					textDocument = value;
 
-					throw new NotImplementedException();
-
-					//lineRenderer.LineDocument = new VirtualLineDocument(value);
+					lineMetrics = TextDocumentMetrics.GetMetrics(value);
+					lineRenderer.LineDocument = new VirtualLineDocument(value, lineMetrics);
 				}
 			}
 		}
 
-		public ILineMetrics LineMetrics => throw new NotImplementedException();
+		public ILineMetrics LineMetrics => lineMetrics;
 
 		public ITextSelectionManager SelectionManager => selectionManager;
 

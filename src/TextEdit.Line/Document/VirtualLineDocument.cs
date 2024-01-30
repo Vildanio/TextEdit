@@ -3,6 +3,9 @@ using TextEdit.Text;
 
 namespace TextEdit.Line
 {
+	/// <summary>
+	/// Implements <see cref="ILineDocument"/> through <see cref="ITextDocument"/>
+	/// </summary>
 	public class VirtualLineDocument : Buffer<string>, ILineDocument
 	{
 		private readonly ITextDocument document;

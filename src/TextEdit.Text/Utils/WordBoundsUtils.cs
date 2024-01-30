@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace TextEdit.Text.Utils
+namespace TextEdit.Text
 {
 	internal static class WordBoundsUtils
 	{

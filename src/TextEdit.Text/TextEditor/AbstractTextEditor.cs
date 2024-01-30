@@ -3,7 +3,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using TextEdit.Line;
-using TextEdit.Text.Rendering;
 
 namespace TextEdit.Text
 {

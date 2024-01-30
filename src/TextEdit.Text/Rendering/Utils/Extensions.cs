@@ -1,4 +1,4 @@
-﻿namespace TextEdit.Text.Rendering
+﻿namespace TextEdit.Text
 {
 	public static class Extensions
 	{

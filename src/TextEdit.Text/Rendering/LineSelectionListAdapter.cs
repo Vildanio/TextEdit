@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using TextEdit.Line;
 
-namespace TextEdit.Text.Rendering
+namespace TextEdit.Text
 {
 	/// <summary>
 	/// Implements <see cref="ITextSelectionList"/> through <see cref="ILineSelectionList"/>

@@ -1,6 +1,4 @@
-﻿using TextEdit.Text.Utils;
-
-namespace TextEdit.Text
+﻿namespace TextEdit.Text
 {
 	/// <summary>
 	/// Collection of common text editing commands

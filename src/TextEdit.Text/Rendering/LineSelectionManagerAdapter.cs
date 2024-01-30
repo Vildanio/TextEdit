@@ -1,6 +1,6 @@
 ﻿using TextEdit.Line;
 
-namespace TextEdit.Text.Rendering
+namespace TextEdit.Text
 {
 	/// <summary>
 	/// Implements <see cref="ITextSelectionManager"/> through <see cref="ILineSelectionManager"/>

@@ -1,10 +1,17 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using TextEdit.Collections;
+using TextEdit.Text;
 
 namespace TextEdit.Utils
 {
 	public static class CollectionExtensions
 	{
+		public static IBuffer<char> AsBuffer(this ITextDocument textDocument)
+		{
+			return new TextDocumentBuffer(textDocument);
+		}
+
 		/// <summary>
 		/// Returns the given <paramref name="enumerator"/>
 		/// </summary>

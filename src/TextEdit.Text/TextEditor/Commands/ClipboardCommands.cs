@@ -1,6 +1,4 @@
-﻿using TextEdit.Text.Rendering;
-
-namespace TextEdit.Text
+﻿namespace TextEdit.Text
 {
 	/// <summary>
 	/// Collection of clipboard related text editor commands
