@@ -1,15 +1,17 @@
-﻿using Avalonia.Input;
-using TextEdit.Line;
+﻿using TextEdit.Line;
 
 namespace TextEdit.Text
 {
-	public abstract class AbstractTextRenderer : InputElement
+	/// <summary>
+	/// Implemens <see cref="AbstractTextRenderer"/> through <see cref="AbstractLineRenderer"/>
+	/// </summary>
+	public abstract class TextRenderer : AbstractTextRenderer
 	{
 		private readonly AbstractLineRenderer lineRenderer;
 		private readonly LineSelectionManagerAdapter selectionManager;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-		protected AbstractTextRenderer(AbstractLineRenderer lineRenderer, ITextDocument textDocument)
+		protected TextRenderer(AbstractLineRenderer lineRenderer, ITextDocument textDocument)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		{
 			this.lineRenderer = lineRenderer;
@@ -20,7 +22,7 @@ namespace TextEdit.Text
 		private ITextDocument textDocument;
 		private TextDocumentMetrics lineMetrics;
 
-		public ITextDocument TextDocument
+		public override ITextDocument TextDocument
 		{
 			get => textDocument;
 			set
@@ -35,37 +37,37 @@ namespace TextEdit.Text
 			}
 		}
 
-		public ILineMetrics LineMetrics => lineMetrics;
+		public override ILineMetrics LineMetrics => lineMetrics;
 
-		public ITextSelectionManager SelectionManager => selectionManager;
+		public override ITextSelectionManager SelectionManager => selectionManager;
 
 		#region Options
 
-		public SelectionMode SelectionMode
+		public override SelectionMode SelectionMode
 		{
 			get => lineRenderer.SelectionMode;
 			set => lineRenderer.SelectionMode = value;
 		}
 
-		public bool WordWrap
+		public override bool WordWrap
 		{
 			get => lineRenderer.WordWrap;
 			set => lineRenderer.WordWrap = value;
 		}
 
-		public bool TextDragDrop
+		public override bool TextDragDrop
 		{
 			get => lineRenderer.TextDragDrop;
 			set => lineRenderer.TextDragDrop = value;
 		}
 
-		public bool VirtualSpace
+		public override bool VirtualSpace
 		{
 			get => lineRenderer.VirtualSpace;
 			set => lineRenderer.VirtualSpace = value;
 		}
 
-		public bool ScrollBelowDocument
+		public override bool ScrollBelowDocument
 		{
 			get => lineRenderer.ScrollBelowDocument;
 			set => lineRenderer.ScrollBelowDocument = value;

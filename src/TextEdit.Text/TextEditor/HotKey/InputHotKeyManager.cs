@@ -6,24 +6,24 @@ namespace TextEdit.Text
 	{
 		private const int tooMuchTime = 100;
 
-		private readonly AbstractTextEditor textEditor;
+		private readonly TextEditor textEditor;
 		private readonly List<HotkeyBinding> hotKeys;
 
 		#region Constructors
 
-		public InputHotKeyManager(AbstractTextEditor textEditor)
+		public InputHotKeyManager(TextEditor textEditor)
 			: this(textEditor, new List<HotkeyBinding>())
 		{
 
 		}
 
-		public InputHotKeyManager(AbstractTextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
+		public InputHotKeyManager(TextEditor textEditor, IEnumerable<HotkeyBinding> bindings)
 			: this(textEditor, new List<HotkeyBinding>(bindings))
 		{
 
 		}
 
-		private InputHotKeyManager(AbstractTextEditor textEditor, List<HotkeyBinding> bindings)
+		private InputHotKeyManager(TextEditor textEditor, List<HotkeyBinding> bindings)
 		{
 			this.textEditor = textEditor;
 			this.hotKeys = bindings;

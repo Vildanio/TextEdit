@@ -9,7 +9,7 @@ namespace TextEdit.Text
 	/// <summary>
 	/// <see cref="Control"/> for rendering and editing <see cref="ITextDocument"/>
 	/// </summary>
-	public abstract class AbstractTextEditor : Control, ITextEditor
+	public abstract class TextEditor : Control, ITextEditor
 	{
 		public static readonly ImmutableArray<HotkeyBinding> BasicHotkeyBindings
 			= new HotkeyBinding[]
@@ -68,7 +68,7 @@ namespace TextEdit.Text
 		private readonly AbstractTextRenderer textRenderer;
 		private readonly TextDocumentChangeManager undoManager;
 
-		protected AbstractTextEditor(AbstractTextRenderer textRenderer)
+		protected TextEditor(AbstractTextRenderer textRenderer)
 		{
 			this.textRenderer = textRenderer;
 			this.hotKeyManager = new InputHotKeyManager(this, BasicHotkeyBindings);
@@ -216,7 +216,7 @@ namespace TextEdit.Text
 		}
 
 		public static readonly StyledProperty<EditMode> EditModeProperty
-			= AvaloniaProperty.Register<AbstractTextEditor, EditMode>(nameof(EditMode), EditMode.Insert);
+			= AvaloniaProperty.Register<TextEditor, EditMode>(nameof(EditMode), EditMode.Insert);
 
 		#endregion
 
