@@ -62,9 +62,19 @@ namespace TextEdit.Visual
 		/// <summary>
 		/// Initializes a new instance of the <see cref="VisualDocument"/> class
 		/// </summary>
-		/// <param name="visualGroup"></param>
-		/// <remarks>This constructor is not safe, because the visualLineGroup can change and not fire event</remarks>
-		public VisualDocument(IVisualGroup visualGroup)
+		/// <param name="capacity"></param>
+		public VisualDocument(int capacity)
+			: this(VisualGroup.CreateUnsafe(new ListBuffer<IVisual>(capacity)))
+        {
+            
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualDocument"/> class
+        /// </summary>
+        /// <param name="visualGroup"></param>
+        /// <remarks>This constructor is not safe, because the visualLineGroup can change and not fire event</remarks>
+        public VisualDocument(IVisualGroup visualGroup)
 		{
 			this.visualGroup = visualGroup;
 		}
