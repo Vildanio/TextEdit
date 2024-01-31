@@ -158,6 +158,24 @@ namespace TextEdit.Text
 
 		#endregion
 
+		#region Layout
+
+		protected override Size ArrangeOverride(Size finalSize)
+		{
+			textRenderer.Arrange(new Rect(finalSize));
+
+			return textRenderer.Bounds.Size;
+		}
+
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			textRenderer.Measure(availableSize);
+
+			return textRenderer.DesiredSize;
+		}
+
+		#endregion
+
 		#region ITextEditor
 
 		public ITextDocument TextDocument

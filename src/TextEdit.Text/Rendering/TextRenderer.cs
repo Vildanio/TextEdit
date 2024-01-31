@@ -1,4 +1,5 @@
-﻿using TextEdit.Line;
+﻿using Avalonia;
+using TextEdit.Line;
 
 namespace TextEdit.Text
 {
@@ -40,6 +41,24 @@ namespace TextEdit.Text
 		public override ILineMetrics LineMetrics => lineMetrics;
 
 		public override ITextSelectionManager SelectionManager => selectionManager;
+
+		#region Layout
+
+		protected override Size ArrangeOverride(Size finalSize)
+		{
+			lineRenderer.Arrange(new Rect(finalSize));
+
+			return lineRenderer.Bounds.Size;
+		}
+
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			lineRenderer.Measure(availableSize);
+
+			return lineRenderer.DesiredSize;
+		}
+
+		#endregion
 
 		#region Options
 
