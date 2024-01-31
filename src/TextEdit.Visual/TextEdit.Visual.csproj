@@ -11,8 +11,4 @@
     <ProjectReference Include="..\TextEdit\TextEdit.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Rendering\" />
-  </ItemGroup>
-
 </Project>

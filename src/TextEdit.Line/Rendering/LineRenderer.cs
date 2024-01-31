@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
